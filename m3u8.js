@@ -54,7 +54,7 @@ webExt.runtime.onMessage.addListener((message, sender) => {
 		setTimeout(() => {
 			switch (location.hostname) {
 			case 'www.66s.cc':
-				const el = v.closest('.dplayer');
+				const el = q('.dplayer-video-wrap');
 				el.style.height = el.parentNode.clientHeight + 'px';
 				break;
 			case 'www.huaxingui.com':
