@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "本地H5播放器",
+  "description": "M3U8、MP4 本地H5播放器————去框架、去flash播放",
+  "version": "1.0.1",
+  "content_scripts": [
+    {
+      "matches": [ "*://*/*" ],
+      "all_frames": false,
+      "css": [ "lib/DPlayer.min.css" ],
+      "js": [
+        "lib/hls.min.js",
+        "lib/DPlayer.min.js",
+        "m3u8.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "scripts": [ "background.js" ]
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "<all_urls>"
+    ,"tabs"
+    ,"webRequest"
+    ,"webRequestBlocking"
+  ],
+  "icons": {
+    "48": "icon.png"
+  },
+  "minimum_chrome_version": "60.0"
+}
