@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "本地H5播放器",
   "description": "M3U8、MP4 本地H5播放器————去框架、去flash播放",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "content_scripts": [
     {
       "matches": [ "*://*/*" ],
