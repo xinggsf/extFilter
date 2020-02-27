@@ -1,12 +1,11 @@
 const filter = details => {
 	const {tabId, frameId, url} = details;
-	const block = details.frameId != 0 ||'object' == details.type;
-	if (block) {
+	if (frameId != 0 ||'object' == details.type) {
 		const info = { url, frameId, id: 'mv-block' };
 		chrome.tabs.sendMessage(tabId, info);
 		chrome.browserAction.enable(tabId);
 	}
-	return {cancel: block};
+	return {cancel: !1};
 };
 
 //用onBeforeSendHeaders更具体

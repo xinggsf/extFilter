@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 			[...document.querySelectorAll('object,embed')].find(isMVFlash);
 		if (!v) return;//已删除，网页重试其他地址
 		log('found MV:\n', message.url, v);
-		/*
+		/* https://raw.githubusercontent.com/MoePlayer/DPlayer/master/dist/DPlayer.min.js
 		const {frameId, tabId} = message;
 		chrome.webNavigation.getFrame({frameId, tabId}, function(details){
 			let f = getFrame(details.url);
@@ -33,15 +33,17 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 				type: 'auto'
 			},
 			autoplay: true,
+			screenshot: true,
 			container: v.parentNode
 		});
 		v.remove();
 		setTimeout(() => {
 			switch (location.hostname) {
-			case 'www.66s.cc':
+			case 'www.i6v.cc':
 				const el = q('.dplayer-video-wrap');
 				el.style.height = el.parentNode.clientHeight.toFixed(0) + 'px';
 				break;
+			case 'www.hdtt8.com':
 			case 'www.huaxingui.com':
 			case 'lefuntv.us':
 				q('.fed-play-player').style.paddingTop = 0;

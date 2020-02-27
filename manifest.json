@@ -1,13 +1,12 @@
 {
   "manifest_version": 2,
-  "name": "本地H5播放器",
-  "description": "M3U8、MP4 本地H5播放器————去框架、去flash播放",
-  "version": "1.1.1",
+  "name": "合金H5播放器",
+  "description": "M3U8、MP4本地H5播放器———去框架、去flash播放",
+  "version": "1.1.2",
   "content_scripts": [
     {
       "matches": [ "*://*/*" ],
       "all_frames": false,
-      "css": [ "lib/DPlayer.min.css" ],
       "js": [
         "lib/hls.min.js",
         "lib/DPlayer.min.js",
