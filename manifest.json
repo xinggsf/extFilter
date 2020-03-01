@@ -6,6 +6,11 @@
   "content_scripts": [
     {
       "matches": [ "*://*/*" ],
+      "exclude_matches": [
+		"http://*.163.com/*",
+		"https://*.163.com/*",
+		"http://*.cctv.com/*"
+	  ],
       "all_frames": false,
       "js": [
         "lib/hls.min.js",
