@@ -55,22 +55,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 		],
 	});
 	v.remove();
-	/*
-	v = dp.video;
-	switch (location.hostname) {
-	case 'www.duboku.tv':
-	case 'www.ffilmer.com':
-	case 'www.caishenys.com':
-	case 'www.xinxindm.com':
-	case 'www.i6v.cc':
-	case 'quanwo.com':
-	case 'www.61vcd.com':
-		v.closest('.dplayer-video-wrap').style.cssText = 'position:absolute!important;left:0;top:0';
-		break;
-	case 'cn.inmi.tv':
-		v.closest('.fed-play-player').style.paddingTop = 0;
-		break;
-	} */
 	dp.fullScreen.request('web');
 });
 
