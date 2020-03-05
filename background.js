@@ -16,7 +16,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		const {tabId, url} = details;
 		um.href = url;
 		if (tabId == -1 || um.hostname.endsWith('.yasehezi.com')) return _noBlock;
-		for (const v of um.searchParams.values) {
+		for (const v of um.searchParams.values()) {
 			if (reAddr.test(v)) {
 				const info = { 'url': v, id: 'iframe-block' };
 				chrome.tabs.sendMessage(tabId, info);
