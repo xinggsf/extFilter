@@ -9,17 +9,20 @@ const filter = details => {
 	return _noBlock;
 };
 
+const um = new URL('https://www.yasehezi.com/');
+const reAddr = /^http.+?\.m(?:3u8|p4)$/;
 chrome.webRequest.onBeforeRequest.addListener(
 	details => {
 		const {tabId, url} = details;
-		if (tabId == -1 || url.startsWith('https://www.yasehezi.com')) return _noBlock;
-		const m = url.match(/=(http.+?\.m(?:3u8|p4))(\?|&|$)/);
-		if (m) {
-			const s = m[2] == '?' ? url.slice(m.index +1) : m[1];
-			const info = { 'url': s, id: 'iframe-block' };
-			chrome.tabs.sendMessage(tabId, info);
-			chrome.browserAction.enable(tabId);
-            return {redirectUrl: 'about:blank'};
+		um.href = url;
+		if (tabId == -1 || um.hostname.endsWith('.yasehezi.com')) return _noBlock;
+		for (const v of um.searchParams.values) {
+			if (reAddr.test(v)) {
+				const info = { 'url': v, id: 'iframe-block' };
+				chrome.tabs.sendMessage(tabId, info);
+				chrome.browserAction.enable(tabId);
+				return {redirectUrl: 'about:blank'};
+			}
 		}
 		return _noBlock;
 	},
