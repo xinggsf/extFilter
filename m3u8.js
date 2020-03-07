@@ -22,14 +22,14 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 	let v = null;
 	switch (msg.id) {
 	case 'mv-block':
-		v = 0 != msg.frameId ? find(e => e.allowFullscreen || isPlayer(e)) :
+		v = 0 != msg.frameId ? find(e => e.allowFullscreen) || find(isPlayer) :
 			[].find.call(document.querySelectorAll('object,embed'), isMVFlash);
 		break;
 	case 'iframe-block':
 		v = find(e => e.src && e.src.includes(msg.url));
 	}
 	if (!v) return;
-	log('found MV:\n', msg.url, v);
+	// log('found MV:\n', msg.url, v);
 	/* https://raw.githubusercontent.com/MoePlayer/DPlayer/master/dist/DPlayer.min.js
 	const {frameId, tabId} = msg;
 	chrome.webNavigation.getFrame({frameId, tabId}, function(details){
@@ -51,44 +51,26 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 			{
 				text: '合金H5扩展BUG反馈',
 				link: 'https://bbs.kafan.cn/thread-2162743-1-1.html'
-			},
+			}
 		],
 	});
 	v.remove();
+	//log(dp);
 	dp.fullScreen.request('web');
+	dp.container.closest('body > *').classList.add('gm-dp-zTop');
+	/*
+	dp.video.addEventListener('dblclick', ev => {
+		if (document.fullscreen) document.exitFullscreen();
+		else dp.fullScreen.toggle('web'); //browser  fullScreen.isFullScreen
+	}, true);
+	dp.notice('视频播放速率为： '+ dp.video.playbackRate, 900); */
 });
 
-setTimeout(x => {
-	switch (location.hostname) {
-	case 'www.hdtt8.com':
-	case 'cn.inmi.tv':
-		injectCSS('.dplayer{height:666px;padding-top:0!important}.dplayer-web-fullscreen-fix .fed-head-info{display:none!important} .fed-head-info{position:absolute!important;}');
-		break;
-	case 'www.dyjihe.com':
-		injectCSS('.dplayer{height:518px;}');
-		break;
-	case '5nj.com':
-	case 'www.yunbtv.com':
-	case 'www.cmdy5.com':
-	case 'kan.jinbaozy.com':
-		injectCSS('.MacPlayer{height:100%}');
-		break;
-	case 'www.hobiao.com':
-		injectCSS('.MacPlayer{height:100%} .dplayer-web-fullscreen-fix .fed-head-info{display:none!important}');
-		break;
-	case 'www.huaxingui.com':
-		injectCSS('.dplayer-web-fullscreen-fix header, .dplayer-web-fullscreen-fix #player-sidebar-is{display:none!important}');
-		break;
-	case 'www.haitur.com':
-	case 'www.haituw.com':
-	case 'www.haitum.cn':
-		injectCSS('.bottom, .dplayer-web-fullscreen-fix header{display:none!important}');
-		break;
-	case 'www.iqiyi.com':
-		injectCSS('.dplayer-web-fullscreen-fix .qy-header{display:none!important}');
-		break;
-	case 'v.qq.com':
-		injectCSS('.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}');
-		break;
-	}
-},99);
+const cssList = {
+	'www.dyjihe.com': '.dplayer{height:518px;}',
+	'www.haitur.com': '.bottom{display:none!important}',
+	'www.huaxingui.com': '.dplayer-web-fullscreen-fix #player-sidebar-is{display:none!important}',
+	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}'
+};
+const ss = cssList[location.hostname];
+ss && setTimeout(injectCSS,99,ss);
