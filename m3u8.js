@@ -17,30 +17,11 @@ const isMVFlash = e => {
 	s = q('embed', e);
 	return !!(s && isMVFlash(s));
 };
-
-chrome.runtime.onMessage.addListener((msg, sender) => {
-	let v = null;
-	switch (msg.id) {
-	case 'mv-block':
-		v = 0 != msg.frameId ? find(e => e.allowFullscreen) || find(isPlayer) :
-			[].find.call(document.querySelectorAll('object,embed'), isMVFlash);
-		break;
-	case 'iframe-block':
-		v = find(e => e.src && e.src.includes(msg.url));
-	}
-	if (!v) return;
-	// log('found MV:\n', msg.url, v);
-	/* https://raw.githubusercontent.com/MoePlayer/DPlayer/master/dist/DPlayer.min.js
-	const {frameId, tabId} = msg;
-	chrome.webNavigation.getFrame({frameId, tabId}, function(details){
-		let f = getFrame(details.url);
-		if (details.parentFrameId != -1) f = f.parent;
-	});
-	const u = new URL(msg.url);
-	const t = u.pathname.endsWith('.m3u8') ? 'hls' : 'normal'; */
+const createPlayer = (v, url) => {
+	//log('found MV:\n', url, v);
 	const dp = new DPlayer({
 		video: {
-			url: msg.url,
+			url: url,
 			type: 'auto'
 		},
 		autoplay: true,
@@ -55,21 +36,31 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 		],
 	});
 	v.remove();
-	//log(dp);
+	//log(dp); https://raw.githubusercontent.com/MoePlayer/DPlayer/master/dist/DPlayer.min.js
 	dp.fullScreen.request('web');
 	dp.container.closest('body > *').classList.add('gm-dp-zTop');
-	/*
-	dp.video.addEventListener('dblclick', ev => {
-		if (document.fullscreen) document.exitFullscreen();
-		else dp.fullScreen.toggle('web'); //browser  fullScreen.isFullScreen
-	}, true);
-	dp.notice('视频播放速率为： '+ dp.video.playbackRate, 900); */
+};
+
+chrome.runtime.onMessage.addListener((msg, sender) => {
+	let v = null;
+	switch (msg.id) {
+	case 'mv-block':
+		v = [].find.call(document.querySelectorAll('object,embed'), isMVFlash);
+		break;
+	case 'iframe-block':
+		v = msg.frameUrl ? find(e => e.src == msg.frameUrl) :
+			find(e => e.allowFullscreen) || find(isPlayer);
+		break;
+	}
+	if (v) createPlayer(v, msg.url);
 });
 
 const cssList = {
-	'www.dyjihe.com': '.dplayer{height:518px;}',
+	'www.dyjihe.com': '.dplayer, #PlayContainer{height:503px;padding:0!important}',
+	'cn.funtv.cc': '.dplayer-web-fullscreen-fix .hot_banner, #fd_tips, .dplayer-web-fullscreen-fix .foot ul.extra{display:none!important}',
 	'www.haitur.com': '.bottom{display:none!important}',
 	'www.huaxingui.com': '.dplayer-web-fullscreen-fix #player-sidebar-is{display:none!important}',
+	'kan.jinbaozy.com': '.dplayer:not(.dplayer-fulled) video{height:514px!important}',
 	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}'
 };
 const ss = cssList[location.hostname];

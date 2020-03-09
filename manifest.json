@@ -37,6 +37,7 @@
     "<all_urls>"
     ,"tabs"
     ,"webRequest"
+    ,"webNavigation"
     ,"webRequestBlocking"
   ],
   "icons": {
