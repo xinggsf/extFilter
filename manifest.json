@@ -9,6 +9,7 @@
       "exclude_matches": [
 		"http://*.163.com/*",
 		"https://*.163.com/*",
+		"https://www.91meijuw.com/*",
 		"https://www.yasehezi.com/*",
 		"https://z1.m1907.cn/*",
 		"http://www.yatu.tv/*",

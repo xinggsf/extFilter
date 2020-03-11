@@ -20,20 +20,17 @@ const isMVFlash = e => {
 const createPlayer = (v, url) => {
 	//log('found MV:\n', url, v);
 	const dp = new DPlayer({
-		video: {
-			url: url,
-			type: 'auto'
-		},
+		video: { url, type: 'auto' },
 		autoplay: true,
 		screenshot: true,
 		theme: '#EC8',
-		container: v.parentNode,
 		contextmenu: [
 			{
 				text: '合金H5扩展BUG反馈',
 				link: 'https://bbs.kafan.cn/thread-2162743-1-1.html'
 			}
 		],
+		container: v.parentNode
 	});
 	v.remove();
 	//log(dp); https://raw.githubusercontent.com/MoePlayer/DPlayer/master/dist/DPlayer.min.js
@@ -64,4 +61,4 @@ const cssList = {
 	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}'
 };
 const ss = cssList[location.hostname];
-ss && setTimeout(injectCSS,99,ss);
+ss && setTimeout(injectCSS,19,ss);

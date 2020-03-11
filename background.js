@@ -1,4 +1,29 @@
 const _noBlock = {cancel: !1};
+const tabIdList = new Set();
+const um = new URL('https://www.yasehezi.com/');
+const domainWhiteList = [
+	'.163.com',
+	'.91meijuw.com',
+	'.cctv.com',
+	'z1.m1907.cn',
+	'.yasehezi.com',
+	'.yatu.tv',
+];
+const checkTab = tab => {
+	if (!tab.url || !tab.url.startsWith('http')) return;
+	um.href = tab.url;
+	if (domainWhiteList.some(k => um.host.endsWith(k))) tabIdList.add(tab.id);
+};
+
+chrome.tabs.onCreated.addListener(checkTab);
+chrome.tabs.onUpdated.addListener((id, changeInfo, tab) => {
+	tabIdList.delete(id);
+	checkTab(tab);
+});
+chrome.tabs.onRemoved.addListener((id, removeInfo) => {
+	tabIdList.delete(id);
+});
+
 //专门处理多层子框架嵌套
 const getTopFrame = (tabId, details) => {
 	chrome.webNavigation.getAllFrames(
@@ -19,7 +44,7 @@ const getTopFrame = (tabId, details) => {
 };
 const filter = details => {
 	const {tabId, frameId, parentFrameId, url, type} = details;
-	if (tabId == -1) return _noBlock;
+	if (tabId == -1 || tabIdList.has(tabId)) return _noBlock;
 	const info = { url };
 	if (frameId != 0) {
 		info.id = 'iframe-block';
@@ -36,26 +61,23 @@ const filter = details => {
 	return _noBlock;
 };
 
-const um = new URL('https://www.yasehezi.com/');
 const reAddr = /^http.+?\.m(?:3u8|p4)$/;
 chrome.webRequest.onBeforeRequest.addListener(
 	details => {
 		const {tabId, frameId, parentFrameId, url} = details;
-		um.href = url;
-		if (tabId == -1 || um.hostname.endsWith('.yasehezi.com')) return _noBlock;
-		for (const v of um.searchParams.values()) {
-			if (reAddr.test(v)) {
-				const info = { 'url': v, id: 'iframe-block' };
-				if (frameId == 0) info.frameUrl = url;
-				else if (parentFrameId > 0) {
-					info.frameId = parentFrameId;
-					getTopFrame(tabId, info);
-					return {redirectUrl: 'about:blank'};
-				}
-				chrome.tabs.sendMessage(tabId, info);
-				chrome.browserAction.enable(tabId);
+		if (tabId == -1 || tabIdList.has(tabId)) return _noBlock;
+		const ss = new URL(url).searchParams.values();
+		for (const v of ss) if (reAddr.test(v)) {
+			const info = { 'url': v, id: 'iframe-block' };
+			if (frameId == 0) info.frameUrl = url;
+			else if (parentFrameId > 0) {
+				info.frameId = parentFrameId;
+				getTopFrame(tabId, info);
 				return {redirectUrl: 'about:blank'};
 			}
+			chrome.tabs.sendMessage(tabId, info);
+			chrome.browserAction.enable(tabId);
+			return {redirectUrl: 'about:blank'};
 		}
 		return _noBlock;
 	},

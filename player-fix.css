@@ -11,6 +11,8 @@
 .dplayer-loaded{ background-color:#5EC !important; }
 .dplayer-video-wrap{
 	position:absolute !important;
+	width: 100% !important;
+	height: 100% !important;
 	left:0; top:0;
 }
 .dplayer-web-fullscreen-fix .gm-dp-zTop{
