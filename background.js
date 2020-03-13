@@ -6,7 +6,6 @@ const domainWhiteList = [
 	'.91meijuw.com',
 	'.cctv.com',
 	'z1.m1907.cn',
-	'.yasehezi.com',
 	'.yatu.tv',
 ];
 const checkTab = tab => {
@@ -62,11 +61,13 @@ const filter = details => {
 };
 
 const reAddr = /^http.+?\.m(?:3u8|p4)$/;
+const ulink = new URL('https://www.xxx.com/');
 chrome.webRequest.onBeforeRequest.addListener(
 	details => {
 		const {tabId, frameId, parentFrameId, url} = details;
 		if (tabId == -1 || tabIdList.has(tabId)) return _noBlock;
-		const ss = new URL(url).searchParams.values();
+		ulink.href = url;
+		const ss = ulink.searchParams.values();
 		for (const v of ss) if (reAddr.test(v)) {
 			const info = { 'url': v, id: 'iframe-block' };
 			if (frameId == 0) info.frameUrl = url;
