@@ -44,12 +44,6 @@
         "duboku-tv.js"
       ],
       "run_at": "document_end"
-    },
-    {
-      "matches": [ "https://www.yasehezi.com/vod-play-*" ],
-      "all_frames": false,
-      "js": [ "yasehezi-com.js" ],
-      "run_at": "document_end"
     }
   ],
   "background": {
