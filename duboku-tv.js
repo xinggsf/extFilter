@@ -73,7 +73,6 @@ const checkM3u8Url = async (url) => {
 			delete playcfg.video.url;
 			playcfg.video.defaultQuality = 0;
 		}
-		log(playcfg);
 		createPlayer(playcfg);
 	}
 	catch (ex) {

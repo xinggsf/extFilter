@@ -4,9 +4,11 @@ const um = new URL('https://www.yasehezi.com/');
 const domainWhiteList = [
 	'.163.com',
 	'.91meijuw.com',
+	'.google.com',
 	'.cctv.com',
 	'z1.m1907.cn',
 	'.yatu.tv',
+	'.zhihu.com',
 ];
 const checkTab = tab => {
 	if (!tab.url || !tab.url.startsWith('http')) return;
