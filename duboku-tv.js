@@ -4,6 +4,7 @@ const fixUrl = s => {
 	if (s[0] == "/") return  mainAddr + s;
 	return s.startsWith(mainAddr) ? s : mainAddr + s.slice(s.indexOf('/',11));
 };
+/* 
 const checkM3u8Url = async (url) => {
 	url = fixUrl(url);
 	let resp = await fetch(url);
@@ -11,7 +12,7 @@ const checkM3u8Url = async (url) => {
 	const a = txt.split('\n');
 	if (a[3].trim() == '') return fixUrl(a[2]);
 	return url;
-};
+}; */
 
 (async () => {
 	let src, v = q('.embed-responsive > script:first-of-type');
@@ -50,7 +51,7 @@ const checkM3u8Url = async (url) => {
 		} else m3u8Url = playData.url;
 		if (!m3u8Url) throw new Error('url error!');
 
-		m3u8Url = await checkM3u8Url(m3u8Url);
+		m3u8Url = fixUrl(m3u8Url);
 		resp = await fetch(m3u8Url);
 		txt = await resp.text();
 		const parser = new m3u8Parser.Parser();
@@ -76,6 +77,7 @@ const checkM3u8Url = async (url) => {
 		createPlayer(playcfg);
 	}
 	catch (ex) {
+		log(ex);
 		if (v && v.matches('iframe')) v.src = src;
 	}
 })();

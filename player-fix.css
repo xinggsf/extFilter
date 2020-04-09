@@ -9,6 +9,7 @@
 }
 .dplayer-web-fullscreen-fix{ overflow:hidden !important; }
 .dplayer-loaded{ background-color:#5EC !important; }
+/* .dplayer-video{ object-fit: fill !important; } */
 .dplayer-video-wrap{
 	position:absolute !important;
 	width: 100% !important;
