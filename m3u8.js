@@ -32,6 +32,8 @@ const router = {
 		e = document.createElement('script');
 		e.textContent = `setTimeout(x => { $('body').unbind('keydown'); }, 990);`;
 		document.body.appendChild(e);
+		e = q('a.disabled#ff-next');
+		e && e.remove();
 	},
 	['www.banlidy.net']() {
 		const e = document.createElement('script');

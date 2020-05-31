@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "合金H5播放器",
   "description": "M3U8、MP4本地H5播放器：去框架、去Flash播放",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "content_scripts": [
     {
       "matches": [ "*://*/*" ],
@@ -16,7 +16,8 @@
 		"http://www.yatu.tv/*",
 		"http://www.youzhidy.com/*",
 		"http://*.cctv.com/*",
-		"https://www.zhihu.com/*"
+		"https://www.zhihu.com/*",
+		"https://*.douyu.com/*"
 	  ],
       "all_frames": false,
 	  "css": [
