@@ -3,10 +3,11 @@ const sleep = ms => new Promise(resolve => { setTimeout(resolve, ms) });
 const log = console.log.bind(console);
 const q = (css, p = document) => p.querySelector(css);
 const isPlayer = e => e.clientWidth > 221 && e.clientHeight > 111;
-const injectCSS = css => {
-	const e = document.createElement('style');
-	e.textContent = css;
+const injectNode = (tag, text) => {
+	const e = document.createElement(tag);
+	if (text) e.textContent = text;
 	document.head.appendChild(e);
+	return e;
 };
 const isMVFlash = e => {
 	const isEmbed = e.matches('embed');
