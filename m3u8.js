@@ -24,16 +24,17 @@ const router = {
 		q('head > base[target="_blank"]').remove();
 	},
 	['www.yasehezi.com']() {
-		injectNode('script',`setTimeout(x => { $('body').unbind('keydown'); }, 990);`);
-		let e = injectNode('meta');
-		e.setAttribute('name','referrer');
-		e.setAttribute('content','no-referrer');
+		dom.script({},`setTimeout(x => { $('body').unbind('keydown'); }, 990);`);
+		dom.meta({
+			name: 'referrer',
+			content: 'no-referrer'
+		});
 
-		e = q('a.disabled#ff-next');
+		let e = q('a.disabled#ff-next');
 		e && e.remove();
 	},
 	['www.banlidy.net']() {
-		injectNode('script',`setTimeout(x => { $('body').unbind('keydown'); }, 990);`);
+		dom.script({},`setTimeout(x => { $('body').unbind('keydown'); }, 990);`);
 	},
 	'www.dyjihe.com': '.dplayer, #PlayContainer{height:503px;padding:0!important}',
 	'kan.jinbaozy.com': '.dplayer{height:503px!important}',
@@ -45,5 +46,7 @@ const router = {
 };
 router['qqkpb.com'] = router['ttmeiju.me'] = router['kan.jinbaozy.com'];
 const ss = router[location.hostname];
-if (typeof ss == 'string') setTimeout(injectNode,99,'style',ss);
+if (typeof ss == 'string') setTimeout(x => {
+	dom.style({}, ss);
+},99);
 else if (typeof ss == 'function') document.addEventListener('DOMContentLoaded',ss);

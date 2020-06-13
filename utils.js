@@ -3,12 +3,24 @@ const sleep = ms => new Promise(resolve => { setTimeout(resolve, ms) });
 const log = console.log.bind(console);
 const q = (css, p = document) => p.querySelector(css);
 const isPlayer = e => e.clientWidth > 221 && e.clientHeight > 111;
-const injectNode = (tag, text) => {
-	const e = document.createElement(tag);
-	if (text) e.textContent = text;
-	document.head.appendChild(e);
-	return e;
-};
+const dom = new Proxy({}, {
+	get(target, tag) {
+		return function (attrs = {}, ...children) {
+			const el = document.createElement(tag);
+			for (let prop of Object.keys(attrs)) {
+				el.setAttribute(prop, attrs[prop]);
+			}
+			for (let child of children) {
+				if (typeof child === 'string') {
+					child = document.createTextNode(child);
+				}
+				el.appendChild(child);
+			}
+			(document.head || document.documentElement).appendChild(el);
+			return el;
+		}
+	}
+});
 const isMVFlash = e => {
 	const isEmbed = e.matches('embed');
 	let s = isEmbed ? e.src : (e.data || e.children.movie.value);
