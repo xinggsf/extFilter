@@ -24,14 +24,11 @@ const router = {
 		q('head > base[target="_blank"]').remove();
 	},
 	['www.yasehezi.com']() {
-		dom.script({},`setTimeout(x => { $('body').unbind('keydown'); }, 990);`);
+		dom.script({},`setTimeout(x => {$('body').unbind('keydown');$('a.disabled').remove()}, 990);`);
 		dom.meta({
 			name: 'referrer',
 			content: 'no-referrer'
 		});
-
-		let e = q('a.disabled#ff-next');
-		e && e.remove();
 	},
 	['www.banlidy.net']() {
 		dom.script({},`setTimeout(x => { $('body').unbind('keydown'); }, 990);`);
