@@ -13,14 +13,14 @@ const router = {
 		dom.script({}, `setTimeout(x => {$('body').unbind('keydown')},99);`);
 	},
 	'www.dyjihe.com': '.dplayer, #PlayContainer{height:503px;padding:0!important}',
-	'kan.jinbaozy.com': '.dplayer{height:503px!important}',
-	//'kan.jinbaozy.com': '.dplayer:not(.dplayer-fulled) video{height:514px!important}',
+	'kan.jinbaozy.com': '.dplayer:not(.dplayer-fulled){height:503px!important}',
 	'cn.funtv.cc': '.dplayer-web-fullscreen-fix .hot_banner, #fd_tips, .dplayer-web-fullscreen-fix .foot ul.extra{display:none!important}',
 	'www.haitur.com': '.bottom{display:none!important}',
 	'www.huaxingui.com': '.dplayer-web-fullscreen-fix #player-sidebar-is{display:none!important}',
 	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}'
 };
 router['qqkpb.com'] = router['ttmeiju.me'] = router['kan.jinbaozy.com'];
+router['www.haiouys.com'] = router['www.edu-hb.com'] = router['cn.funtv.cc'];
 const ss = router[location.hostname];
 ss && document.addEventListener('DOMContentLoaded',x => {
 	if (typeof ss == 'string') dom.style({}, ss);

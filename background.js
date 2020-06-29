@@ -4,10 +4,14 @@ const um = new URL('https://www.yasehezi.com/');
 const domainWhiteList = [
 	'.163.com',
 	'.91meijuw.com',
-	'.google.com',
 	'.cctv.com',
+	'.douyu.com',
+	'www.duboku.tv',
+	'.google.com',
+	'www.kalidm.com',
 	'z1.m1907.cn',
 	'.yatu.tv',
+	//'www.youzhidy.com',
 	'.zhihu.com',
 ];
 const checkTab = tab => {

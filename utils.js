@@ -39,7 +39,6 @@ const makePlayCfg = (v, url, type = 'auto') => {
 		video: { url, type },
 		autoplay: true,
 		screenshot: true,
-		theme: '#EC8',
 		contextmenu: [
 			{
 				text: '合金H5扩展BUG反馈',

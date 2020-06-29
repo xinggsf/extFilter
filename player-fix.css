@@ -8,7 +8,8 @@
 	padding:0 !important;
 }
 .dplayer-web-fullscreen-fix{ overflow:hidden !important; }
-.dplayer-loaded{ background-color:#5EC !important; }
+.dplayer-loaded{ background-color:orange !important; }
+/* .dplayer-played{ background-color:purple !important; } */
 /* .dplayer-video{ object-fit: fill !important; } */
 .dplayer-video-wrap{
 	position:absolute !important;
