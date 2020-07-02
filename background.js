@@ -102,6 +102,13 @@ chrome.webRequest.onBeforeRequest.addListener(
 );
 chrome.webRequest.onBeforeRequest.addListener(
 	filter,
+    {
+		urls: ['*://*/hls/*'], types: ['xmlhttprequest']
+	},
+    ["blocking"]
+);
+chrome.webRequest.onBeforeRequest.addListener(
+	filter,
     { urls: ['*://*/*'], types: ['media']},
     ["blocking"]
 );

@@ -13,9 +13,9 @@ const router = {
 		dom.script({}, `setTimeout(x => {$('body').unbind('keydown')},99);`);
 	},
 	'www.dyjihe.com': '.dplayer, #PlayContainer{height:503px;padding:0!important}',
+	'www.sansuia.com': '.dplayer:not(.dplayer-fulled){height:733px!important} .fed-play-player{padding-top:0!important}',
 	'kan.jinbaozy.com': '.dplayer:not(.dplayer-fulled){height:503px!important}',
-	'cn.funtv.cc': '.dplayer-web-fullscreen-fix .hot_banner, #fd_tips, .dplayer-web-fullscreen-fix .foot ul.extra{display:none!important}',
-	'www.haitur.com': '.bottom{display:none!important}',
+	'cn.funtv.cc': '.dplayer-web-fullscreen-fix .hot_banner, #fd_tips, .dplayer-web-fullscreen-fix .foot ul.extra{display:none!important} #topnav{position: absolute!important}',
 	'www.huaxingui.com': '.dplayer-web-fullscreen-fix #player-sidebar-is{display:none!important}',
 	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}'
 };
