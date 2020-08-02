@@ -2,16 +2,28 @@ const router = {
 	['www.xiamov.com']() {
 		q('head > base[target="_blank"]').remove();
 	},
-	['www.yasehezi.com']() {
+	['www.imomoe.in']() {
+		setTimeout(x => {q('head > base[target]').remove()},333);
+	},
+	/* ['www.nfmovies.com']() {
 		dom.meta({
 			name: 'referrer',
 			content: 'no-referrer'
 		});
-	},
+		dom.meta({
+			'http-equiv': 'Access-Control-Allow-Origin',
+			content: '*'
+		});
+		dom.meta({
+			'http-equiv': 'Access-Control-Allow-Headers',
+			content: "Origin, X-Requested-With, Content-Type, Accept"
+		});
+	}, */
 	['www.banlidy.net']() {
 		//const e = q('head > script[src$="system.js"]'); onload
 		dom.script({}, `setTimeout(x => {$('body').unbind('keydown')},99);`);
 	},
+	'www.dandanzan.com': '.dplayer-web-fullscreen-fix video{max-height:100%!important}',
 	'www.dyjihe.com': '.dplayer, #PlayContainer{height:503px;padding:0!important}',
 	'www.sansuia.com': '.dplayer:not(.dplayer-fulled){height:733px!important} .fed-play-player{padding-top:0!important}',
 	'kan.jinbaozy.com': '.dplayer:not(.dplayer-fulled){height:503px!important}',
@@ -21,6 +33,7 @@ const router = {
 };
 router['qqkpb.com'] = router['ttmeiju.me'] = router['kan.jinbaozy.com'];
 router['www.haiouys.com'] = router['www.edu-hb.com'] = router['cn.funtv.cc'];
+router['www.foxiys.com'] = router['www.dyjihe.com'];
 const ss = router[location.hostname];
 ss && document.addEventListener('DOMContentLoaded',x => {
 	if (typeof ss == 'string') dom.style({}, ss);

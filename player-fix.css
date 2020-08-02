@@ -7,7 +7,7 @@
 	height: 100% !important;
 	padding:0 !important;
 }
-.dplayer-web-fullscreen-fix,html{ overflow:auto !important; }
+.dplayer-web-fullscreen-fix{ overflow:hidden !important; }
 .dplayer-loaded{ background-color:orange !important; }
 /* .dplayer-played{ background-color:purple !important; } */
 /* .dplayer-video{ object-fit: fill !important; } */

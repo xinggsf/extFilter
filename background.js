@@ -100,13 +100,13 @@ chrome.webRequest.onBeforeRequest.addListener(
 	},
     ["blocking"]
 );
-chrome.webRequest.onBeforeRequest.addListener(
-	filter,
-    {
-		urls: ['*://*/hls/*'], types: ['xmlhttprequest']
-	},
-    ["blocking"]
-);
+// chrome.webRequest.onBeforeRequest.addListener(
+	// filter,
+    // {
+		// urls: ['*://*/hls/*'], types: ['xmlhttprequest']
+	// },
+    // ["blocking"]
+// );
 chrome.webRequest.onBeforeRequest.addListener(
 	filter,
     { urls: ['*://*/*'], types: ['media']},

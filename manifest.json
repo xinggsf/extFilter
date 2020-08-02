@@ -2,21 +2,23 @@
   "manifest_version": 2,
   "name": "合金H5播放器",
   "description": "M3U8、MP4本地H5播放器：去框架、去Flash播放",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "content_scripts": [
     {
       "matches": [ "*://*/*" ],
       "exclude_matches": [
 		"http://*.163.com/*",
 		"https://*.163.com/*",
-		"https://www.duboku.tv/*",
-		"https://*.google.com/*",
 		"https://www.91meijuw.com/*",
+		"https://www.duboku.tv/*",
+		"https://www.gamersky.com/*",
+		"https://*.google.com/*",
 		"http://www.kalidm.com/*",
 		"https://z1.m1907.cn/*",
 		"http://www.yatu.tv/*",
 		"http://www.youzhidy.com/*",
-		"http://*.cctv.com/*",
+		"*://*.cctv.com/*",
+		"*://*.cntv.cn/*",
 		"https://www.zhihu.com/*",
 		"https://*.douyu.com/*"
 	  ],
