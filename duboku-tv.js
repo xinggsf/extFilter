@@ -1,4 +1,4 @@
-const mainAddr = 'https://v.zdubo.com';//主视频服务器地址（前缀）
+const mainAddr = 'https://tv.wedubo.com/';//主视频服务器地址（前缀）
 //修正、补全为绝对地址
 const fixUrl = s => {
 	if (s[0] == "/") return  mainAddr + s;
@@ -17,6 +17,8 @@ const checkM3u8Url = async (url) => {
 (async () => {
 	let src, v = q('.embed-responsive > script:first-of-type');
 	if (!v) return;
+	dom.style({}, '.dplayer{height:566px!important}');
+	/* 
 	new MutationObserver(function(rs) {
 		v = find(e => e.matches('td>iframe'));
 		if (v) {
@@ -29,14 +31,14 @@ const checkM3u8Url = async (url) => {
 		childList : true,
 		subtree : true
 	});
-
+ */
 	try {
 		let m3u8Url, resp, vid,
 		txt = r1(/player_data=(.+?)$/, v.textContent);
-		const playData = JSON.parse(txt);
-		if (playData.from == 'iframe') {
+		const data = JSON.parse(txt);
+		if (data.from == 'iframe') {
 			//vid = txt.split('/').pop();
-			resp = await fetch(fixUrl(playData.url));
+			resp = await fetch(fixUrl(data.url));
 			txt = await resp.text();
 			txt = r1(/var content\s*=\s*"(.+?)"/, txt);
 			if (!txt) {
@@ -48,7 +50,7 @@ const checkM3u8Url = async (url) => {
 			//pic = r1(/var pic = "(.+?)"/, txt);
 			//mainAddr = r1(/var redirecturl = "(.+?)"/, txt);
 			m3u8Url = r1(/var main = "(.+?)"/, txt);
-		} else m3u8Url = playData.url;
+		} else m3u8Url = data.url;
 		if (!m3u8Url) throw new Error('url error!');
 
 		m3u8Url = fixUrl(m3u8Url);
@@ -58,8 +60,8 @@ const checkM3u8Url = async (url) => {
 		parser.push(txt);
 		parser.end();
 		const playlist = parser.manifest.playlists;
-		while (!v) await sleep(30);
-		const playcfg = makePlayCfg(v, m3u8Url, 'hls');
+		//while (!v) await sleep(30);
+		const playcfg = makePlayCfg(v.parentNode, m3u8Url, 'hls');
 		if (playlist && playlist.length > 1) {
 			const labels = ["标清", "高清", "超清", "蓝光"];
 			const qualitys = [];
@@ -77,7 +79,7 @@ const checkM3u8Url = async (url) => {
 		createPlayer(playcfg);
 	}
 	catch (ex) {
-		log(ex);
-		if (v && v.matches('iframe')) v.src = src;
+		// log(ex);
+		// if (v && v.matches('iframe')) v.src = src;
 	}
 })();

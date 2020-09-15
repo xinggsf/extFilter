@@ -5,13 +5,15 @@ const domainWhiteList = [
 	'.163.com',
 	'.91meijuw.com',
 	'.cctv.com',
+	'.cntv.cn',
 	'.douyu.com',
-	'www.duboku.tv',
+	'.duboku.tv',
+	'.gamersky.com',
 	'.google.com',
-	'www.kalidm.com',
+	'.kalidm.com',
 	'z1.m1907.cn',
 	'.yatu.tv',
-	//'www.youzhidy.com',
+	'.youzhidy.com',
 	'.zhihu.com',
 ];
 const checkTab = tab => {

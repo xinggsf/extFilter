@@ -2,25 +2,24 @@
   "manifest_version": 2,
   "name": "合金H5播放器",
   "description": "M3U8、MP4本地H5播放器：去框架、去Flash播放",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "content_scripts": [
     {
       "matches": [ "*://*/*" ],
       "exclude_matches": [
-		"http://*.163.com/*",
-		"https://*.163.com/*",
+		"*://*.163.com/*",
 		"https://www.91meijuw.com/*",
-		"https://www.duboku.tv/*",
+		"*://*.cctv.com/*",
+		"*://*.cntv.cn/*",
+		"https://*.douyu.com/*",
+		"https://*.duboku.tv/*",
 		"https://www.gamersky.com/*",
 		"https://*.google.com/*",
 		"http://www.kalidm.com/*",
 		"https://z1.m1907.cn/*",
 		"http://www.yatu.tv/*",
 		"http://www.youzhidy.com/*",
-		"*://*.cctv.com/*",
-		"*://*.cntv.cn/*",
-		"https://www.zhihu.com/*",
-		"https://*.douyu.com/*"
+		"https://www.zhihu.com/*"
 	  ],
       "all_frames": false,
 	  "css": [
@@ -36,7 +35,7 @@
       "run_at": "document_start"
     },
     {
-      "matches": [ "https://www.duboku.tv/vodplay/*" ],
+      "matches": [ "https://cn.duboku.tv/vodplay/*" ],
       "all_frames": false,
 	  "css": [
 		"lib/DPlayer.min.css",
