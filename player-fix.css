@@ -6,6 +6,7 @@
 	width: 100% !important;
 	height: 100% !important;
 	padding:0 !important;
+	margin:0 !important;
 }
 .dplayer-web-fullscreen-fix{ overflow:hidden !important; }
 .dplayer-loaded{ background-color:orange !important; }

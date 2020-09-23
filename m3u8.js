@@ -19,19 +19,18 @@ const router = {
 	['quanwo.com']() {
 		dom.script({}, `setTimeout(x => {$('body').unbind('keydown')},99);`);
 	},
-	'www.dandanzan.com': '.dplayer-web-fullscreen-fix video{max-height:100%!important}',
+	// 'www.dandanzan.com': '.dplayer-web-fullscreen-fix video{max-height:100%!important}',
 	'www.dyjihe.com': '.dplayer, #PlayContainer{height:503px;padding:0!important}',
 	// 'www.sansuia.com': '.dplayer:not(.dplayer-fulled){height:733px!important} .fed-play-player{padding-top:0!important}',
-	'k.jinbaodm.com': '.dplayer:not(.dplayer-fulled){height:503px!important}',
 	'www.edu-hb.com': '.dplayer-web-fullscreen-fix .hot_banner, #fd_tips, .dplayer-web-fullscreen-fix .foot ul.extra{display:none!important} #topnav{position: absolute!important}',
-	'www.huaxingui.com': '.dplayer-web-fullscreen-fix #player-sidebar-is{display:none!important}',
+	'k.jinbaodm.com': '.dplayer:not(.dplayer-fulled){height:503px!important}',
 	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}'
 };
-router['qqkpb.com'] = router['ttmeiju.me'] = router['k.jinbaodm.com'];
-router['www.haiouys.com'] = router['www.edu-hb.com'];
+router['9kke.com'] = router['ttmeiju.me'] = router['k.jinbaodm.com'];
+// router['www.haiouys.com'] = router['www.edu-hb.com'];
 router['www.foxiys.com'] = router['www.dyjihe.com'];
 router['www.imomoe.in'] = router['www.xxdm5.com'] = router['www.xiamov.com'];
-router['www.banlidy.net'] = router['quanwo.com'];
+router['www.banlidy.net'] = router['www.nangua5.com'] = router['quanwo.com'];
 const ss = router[location.hostname];
 ss && document.addEventListener('DOMContentLoaded',x => {
 	if (typeof ss == 'string') dom.style({}, ss);
