@@ -26,7 +26,7 @@ const router = {
 router['9kke.com'] = router['ttmeiju.me'] = router['k.jinbaodm.com'];
 router['bhys.ltd'] = router['www.edu-hb.com'];
 router['www.foxiys.com'] = router['www.dyjihe.com'];
-router['www.imomoe.in'] = router['www.xxdm5.com'] = router['www.xiamov.com'];
+router['www.imomoe.ai'] = router['www.xxdm5.com'] = router['www.xiamov.com'];
 const ss = router[location.hostname];
 ss && document.addEventListener('DOMContentLoaded',x => {
 	if (typeof ss == 'string') dom.style({}, ss);

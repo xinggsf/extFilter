@@ -13,12 +13,10 @@
 		"*://*.cctv.com/*",
 		"*://*.cntv.cn/*",
 		"https://*.douyu.com/*",
-		"https://*.duboku.tv/*",
 		"https://www.gamersky.com/*",
 		"https://*.google.com/*",
 		"https://www.hmtv.me/*",
 		"http://www.imeiju.io/*",
-		"http://www.kalidm.com/*",
 		"https://www.lzvod.net/*",
 		"https://z1.m1907.cn/*",
 		"http://www.yatu.tv/*",
@@ -38,23 +36,6 @@
         "m3u8.js"
       ],
       "run_at": "document_start"
-    },
-    {
-      "matches": [ "https://cn.duboku.tv/vodplay/*" ],
-      "all_frames": false,
-	  "css": [
-		"lib/DPlayer.min.css",
-		"player-fix.css"
-	  ],
-      "js": [
-        "lib/m3u8-parser.min.js",
-        "lib/crypto-js.js",
-        "lib/hls.min.js",
-        "lib/DPlayer.min.js",
-        "utils.js",
-        "duboku-tv.js"
-      ],
-      "run_at": "document_end"
     }
   ],
   "background": {
