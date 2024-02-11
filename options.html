@@ -1,0 +1,80 @@
+<html><head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>合金H5设置页</title>
+	<style>
+		@media (prefers-color-scheme: dark) {
+			body {
+				background: #111;
+				color: #eee;
+			}
+		}
+
+		textarea{width:388px; height:211px;}
+		input,td, textarea,th{ font-size: 13px }
+		table{
+			width: 880px;
+			display: table;
+			border-color: grey;
+		}
+		table, th, td{ border: 1px solid #d4d4d4 }
+		td {
+			line-height: 1.2em;
+			min-width: 24px;
+			vertical-align: top;
+		}
+	</style>
+</head>
+    <body>
+		<h2>选择解码库</h2>
+        <p>
+			<form>
+				<input type="radio" name="ways" id="useHls" />兼容模式。大缓存，适应于低网速 -->
+				<input type="checkbox" id="hlsCache"/>缓存视频以便稍后观赏<br><br>
+				<input type="radio" name="ways" id="useShaka" />高性能模式。更好的发挥显卡性能，CPU和内存占用低。<br><br> 设置缓冲区大小：<input type="range" id="skBufSize" min="10" max="1600" step="10" style="width:330px"/>
+				<input type="number" id="numBuf" min="10" max="1600" step="10" style="width:4em" />秒
+			</form>
+        </p>
+		<hr>
+		<h2>视频解析</h2>
+        <p>
+            <input type="checkbox" id="useJX"/><label for="useJX">使用视频解析</label>
+            <p>
+				<i>名称：</i><input type="text" id="txtTitle" style="width:88px" required />
+				<i>URL：</i><input type="url" id="txtURL" placeholder="https://example.com" pattern="^https://\S+" size="30" required style="width:588px"/>
+				<button id="addRow">增加解析地址</button>
+			</p>
+			<p>视频解析地址列表<input type="checkbox" id="cbRandom"/>
+			<label for="cbRandom">随机选择一项</label></p>
+			<table id="tableJX"><tbody id="tbJX"></tbody></table>
+            <p><button id="delRow">删除选定行</button></p>
+        </p>
+		<hr>
+		<h2>排除域名</h2>
+		<p>
+			<p>一行一条规则，只能输入小写字母数字连线下划线点号。格式：</p>
+			<p>.sina. 可排除www.sina.com.cn和k.sina.cn</p>
+			<p>pianku. 可排除www.vpianku.com和www.pianku.li</p>
+			<textarea id="txtDomain" pattern="[-\.\w\n]+" required></textarea>
+        </p>
+		<hr>
+		<h2>页面全屏</h2>
+        <input type="checkbox" id="cbWebFull"></input>
+		<label for="cbWebFull">自动页面全屏</label>
+        <p>从不自动全屏域名，规则同上</p>
+		<textarea id="txtNoWebFull"></textarea>
+		<hr>
+		<h2>需要处理M3U广告的域名(页面已修改并替换了播放器)</h2>
+        <p>指定域名处理量子云、非凡云的M3U广告(扩展作用页面)</p>
+		<textarea id="txtM3u"></textarea>
+		<hr>
+		<h2>需要注入GM脚本的域名(未修改页面)</h2>
+        <p>指定域名处理量子云、非凡云的M3U广告</p>
+		<textarea id="txtGM_M3u"></textarea>
+		<hr>
+        <button id="saveSettings">保存</button>
+        <button id="defaultCfg">默认配置</button>
+    </body>
+    <script type="module" src="config.js"></script>
+    <script type="module" src="options.js"></script>
+</html>

@@ -1,0 +1,84 @@
+<html><head>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #111;
+		color: #eee;
+	}
+}
+
+body {
+	width:48em;
+    height:auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+body,h2,div,dl,dd {
+    margin: 0;
+}
+h2 {
+    text-align: center;
+}
+.box {
+    border: 3px solid #8bd;
+    overflow: hidden;
+    width:auto;
+    height:auto;
+    min-height:18em;
+    overflow: hidden;
+    padding: 3px;
+}
+dl {
+    overflow: hidden;
+    padding-bottom: 1px;
+}
+dt {
+	color: #333;
+    background: none repeat scroll 0 0 #C3DFEA;
+    display: inline-block;
+    float: left;
+    font-size: 1em;
+    width: 100%;
+    cursor: pointer;
+    word-wrap: break-all;
+    word-break: break-all;
+    margin: auto auto 2px;
+}
+.last-col {
+    width: 7%;
+    color: #35a;
+    cursor: pointer;
+    text-align: center;
+}
+dd.idx {
+    width: 8%;
+    color: purple;
+	font-weight: bold;
+}
+dd {
+    border-bottom: 1px dashed #CCC;
+    display: inline;
+    height: 1.5em;
+    float: left;
+    font-size: 1.3em;
+    padding: 2px 0;
+    text-align: left;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 42%;
+}
+</style>
+</head>
+<body>
+<h2>已捕获媒体列表</h2>
+<div class="box">
+	<dl>
+		<dt>地址栏</dt>
+		<dd>媒体类型</dd><dd>媒体字节大小</dd><dd class="last-col">播放</dd>
+	</dl>
+</div>
+<script src="./utils.js"></script>
+<script type="module" src="./mv-list.js"></script>
+</body>
+</html>

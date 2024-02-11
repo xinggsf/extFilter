@@ -1,0 +1,57 @@
+<html><head>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #111;
+		color: #eee;
+	}
+}
+
+body {
+	width:15em;
+}
+body,hr,ul {
+	margin: 0;
+}
+ul {
+	list-style: none;
+	padding: 0;
+}
+li {
+	border: none;
+	position: relative;
+	height: 30px;
+	font-size: 20px;
+	text-align: center;
+	display: block;
+	outline: none;
+}
+li:hover {
+	background-color: #ec6;
+}
+a {
+	display: block;
+	color: #379;
+	text-decoration: none;
+	white-space: nowrap;
+}
+</style>
+</head>
+<body>
+<ul>
+	<li><a id="power"><input type="checkbox">开★关</input></a></li>
+	<hr>
+	<li><a id="mvList">无捕获媒体</a></li>
+	<li><a href="./options.html" target="_blank">选项...</a></li>
+	<hr>
+	<li><a id="cacheMV"><input type="checkbox">强制缓存视频切片</input></a></li>
+	<li><a id="clearCache">清除所有站点缓存</a></li>
+	<hr>
+	<li><a href="https://bbs.kafan.cn/thread-2162743-1-1.html" target="_blank">BUG 反馈</a></li>
+	<li><a href="./donate.html">❤️打赏-微信</a></li>
+	<li><a href="https://github.com/xinggsf/extFilter/releases" target="_blank">查看更新页</a></li>
+</ul>
+</body>
+<script type="text/javascript" src="./popup.js"></script>
+</html>

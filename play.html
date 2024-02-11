@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>合金H5－－正在播放</title>
+    <meta charset="UTF-8">
+	<!-- meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; connect-src * ws://* wss://*; style-src * 'unsafe-inline'; img-src * data:; script-src * 'unsafe-inline' 'unsafe-eval';" -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Access-Control-Allow-Headers" content="Origin, X-Requested-With, Content-Type, Accept">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<meta name="referrer" content="never">
+    <script type="text/javascript" src="./lib/dash.all.min.js"></script>
+    <script type="text/javascript" src="./lib/hls.min.js"></script>
+    <script type="text/javascript" src="./lib/flv.min.js"></script>
+    <script type="text/javascript" src="./lib/DPlayer.min.js"></script>
+	<style>
+		body {
+			width:100vw;height:100vh;
+			margin:0;overflow:hidden;
+		}
+		#player {
+			width:100%;height:100%;
+		}
+		.dplayer-full-in-icon {
+			display: none !important;
+		}
+	</style>
+    <link rel="stylesheet" href="./player-fix.css">
+</head>
+<body>
+    <div id="player"></div>
+</body>
+<script src="./utils.js"></script>
+<script type="module" src="./cleanM3u.js"></script>
+<script type="module" src="./config.js"></script>
+<script type="module" src="./play.js"></script>
+</html>
