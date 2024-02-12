@@ -12,6 +12,11 @@ const ss = router[host];
 const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
 const iframes = document.getElementsByTagName('iframe');
 const find = [].find.bind(iframes);
+const getStyle = (o, s) => {
+	if (o.style[s]) return o.style[s];
+	s = s.replace(/([A-Z])/g,'-$1').toLowerCase();
+	return getComputedStyle(o)?.getPropertyValue(s);
+};
 
 let cfg,dp;
 
@@ -157,7 +162,7 @@ const handleMessage = async(v, url, vType='auto') => {
 		p.classList.remove('study-video-wrapper--gray');
 		p = p.firstChild;
 	}
-	else {
+	else {// padding-bottom --bs-aspect-ratio
 		if (!ss && v.closest('.MacPlayer td')) dom.style({}, router['acgndmku.com']);
 
 		let {offsetWidth: w, offsetHeight: h} = v;
