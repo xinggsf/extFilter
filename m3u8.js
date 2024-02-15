@@ -52,12 +52,11 @@ const createPlayer = async (p, url, type = 'auto') => {
 					// shaka crashed with an unhandled native error
 					}
 
-					if (err.severity === shaka.util.Error.Severity.CRITICAL) {
+					else if (err.severity === shaka.util.Error.Severity.CRITICAL) {
 						alert('合金H5播放器\n无法解码！请换用兼容模式');
 					} else {
 					// handle non-fatal error, playback can continue
 					}
-
 				});
 				player.shaka = sk;
 			}
