@@ -115,8 +115,8 @@ const handleMessage = async(v, url, vType='auto') => {
 		v.src = url;
 		return;
 	}
-	// yhdm95.com host为页面域名
-	if (/\byhdm\d+\.com/.test(host)) url = url.replace(/(\.com)\d+/,'$1');
+	// yhdmw7.com host为页面域名
+	if (/\byhdmw\d+\.com/.test(host)) url = url.replace(/(\.com)\d+/,'$1');
 
 	if (typeof ss == 'string') dom.style({}, ss);
 	else if (typeof ss == 'function') ss();
