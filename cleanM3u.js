@@ -17,18 +17,22 @@ export default function() {
 		const lines = text.trim().split('\n').filter(l => l !== '#EXT-X-DISCONTINUITY');
 		let i = lines.length-2;
 		if (i < 22) return lines.join('\n');
-		for (;lines[i].slice(-8, -7) !== '0';i-=2) {
+		const idx = lines[i].length-7;
+		console.log('index: %i ; char: %s ; ID string: %s',idx,lines[i][idx],lines[i].slice(idx));
+		for (;lines[i].at(-8) !== '0';i-=2) {
 			lines[i] = lines[i-1] = void 0;
 		}
 		const m = lines[i].match(/(\d{4})\.ts$/);
 		if (!m) return lines.join('\n');
 
-		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa000123.ts
+		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa005123.ts
 		i -= 6;
 		for (const max = +m[1];i > 33;i-=2) {
-			const n = +lines[i].slice(-7, -3);
-			if (n > max || lines[i].slice(-8, -7) !== '0') lines[i] = lines[i-1] = void 0;
+			const n = +lines[i].slice(idx, idx+4);
+			if (n > max) lines[i] = lines[i-1] = void 0;
+			// else console.log(n);
 		}
+		console.log('合金HMTL5扩展： Remove ad\'s lines of m3u8!');
 		return lines.filter(l => l !== void 0).join('\n');
 	};
 	const realFetch = self.fetch;
