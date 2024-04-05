@@ -32,7 +32,7 @@ export default function() {
 			if (n > max) lines[i] = lines[i-1] = void 0;
 			// else console.log(n);
 		}
-		console.log('合金HMTL5扩展： Remove ad\'s lines of m3u8!');
+		console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 		return lines.filter(l => l !== void 0).join('\n');
 	};
 	const realFetch = self.fetch;
