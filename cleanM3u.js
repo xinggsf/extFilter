@@ -17,8 +17,8 @@ export default function() {
 		const lines = text.trim().split('\n').filter(l => l !== '#EXT-X-DISCONTINUITY');
 		let i = lines.length-2;
 		if (i < 22) return lines.join('\n');
-		const idx = lines[i].length-7;
-		console.log('index: %i ; char: %s ; ID string: %s',idx,lines[i][idx],lines[i].slice(idx));
+		// const idx = lines[i].length-7;
+		// console.log('index: %i ; char: %s ; ID string: %s',idx,lines[i][idx],lines[i].slice(idx));
 		for (;lines[i].at(-8) !== '0';i-=2) {
 			lines[i] = lines[i-1] = void 0;
 		}
@@ -26,11 +26,14 @@ export default function() {
 		if (!m) return lines.join('\n');
 
 		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa005123.ts
+		// const len = lines[i].length;
 		i -= 6;
 		for (const max = +m[1];i > 33;i-=2) {
-			const n = +lines[i].slice(idx, idx+4);
-			if (n > max) lines[i] = lines[i-1] = void 0;
-			// else console.log(n);
+			if (lines[i].at(-8) === '0') { // && len === lines[i].length
+				const n = +lines[i].slice(-7, -3);
+				if (n < max) continue;
+			}
+			lines[i] = lines[i-1] = void 0;
 		}
 		console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 		return lines.filter(l => l !== void 0).join('\n');
