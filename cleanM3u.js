@@ -2,7 +2,7 @@
 export default function() {
 	// const reFf0Lz = /\.ts\s+(#EXT-X-DISCONTINUITY).+?\1/gs;
 	const itemsHandle = [// 处理逻辑组: 神马云、量子云、非凡云
-		/^https:\/\/(yz|hd)zy\d*\.play-cdn\d*\.com/,
+		/^https:\/\/(yzzy|hdzy|vip)\d*\.play-cdn\d*\.com/,
 		/^https:\/\/(vip\d*\.lz-?cdn|v\.cdnlz)\d*\./,
 		/^https:\/\/(svips)?vip\.ffzy-?(?:play|online|read)\d*\./
 	];
