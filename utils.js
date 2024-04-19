@@ -87,7 +87,7 @@ const uu = {
 			construct(target, args, newTarget) {
 				const opts = {
 					maxBufferSize: 36 << 20, // 36MB
-					maxBufferLength: 6,
+					maxBufferLength: buffSize,
 					maxMaxBufferLength: buffSize,
 					backBufferLength: hlsCache ? Infinity : 9
 				};
