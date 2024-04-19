@@ -30,7 +30,7 @@ const isMVFlash = e => {
 	return !!(s && isMVFlash(s));
 };
 const createPlayer = async (p, url, type = 'auto') => {
-	hookHls(cfg);
+	!cfg.useShaka && hookHls(cfg);
 	if (!type || type == 'auto') type = getPlayType(url);
 	const video = { url, type };
 	let playRate;
