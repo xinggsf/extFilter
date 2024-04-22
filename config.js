@@ -16,7 +16,7 @@ const rawConfig = {
 	"hlsCache": false,
 	"autoWebFull": false,
 	"hostsDisableWF": [".yatu.tv","weixin.qq.com"],
-	"domainsCleanM3u": [".yatu.tv",".xyhdmw.com",".xyhdm.cc","yhdmw7.com",".mgtvys.",".qdm66.com",".856dm.com",".ddzvod.com",".nnvod.com","ikandy2.fun"],
+	"domainsCleanM3u": [".yatu.tv",".xyhdmw.",".xyhdm.","yhdmw7.com",".mgtvys.",".qdm66.com",".856dm.com",".ddzvod.com",".nnvod.com"],
 	"hostsGM": [".douban.com","dandanzan.net","nnyy.in",".btnull."]
 };
 
