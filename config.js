@@ -2,7 +2,7 @@ const rawConfig = {
 	"domainWhiteList": [
 		".ixigua.com","aidi.tv",".appinn.com","bimiacg4.net",".dj92cc.net",
 		".gamersky.com",".leeyiding.com","netflix.",".novipnoad.com",
-		".voflix.com",".youzhidy.com",".zhihu.com",".zhlhh.com"
+		".olevod.tv",".voflix.com",".youzhidy.com",".zhihu.com",".zhlhh.com"
 	],
 	"useJX": 999,
 	"jxUrls": [
@@ -16,7 +16,7 @@ const rawConfig = {
 	"hlsCache": false,
 	"autoWebFull": false,
 	"hostsDisableWF": [".yatu.tv","weixin.qq.com"],
-	"domainsCleanM3u": [".yatu.tv",".xyhdmw.",".xyhdm.","yhdmw7.com",".mgtvys.",".qdm66.com",".856dm.com",".ddzvod.com",".nnvod.com"],
+	"domainsCleanM3u": [".yatu.tv",".xyhdmw.",".xyhdm.","yhdmw7.com",".mgtvys.",".qdm66.com",".806dm.com",".ddzvod.com",".nnvod.com"],
 	"hostsGM": [".douban.com","dandanzan.net","nnyy.in",".btnull."]
 };
 
