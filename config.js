@@ -1,14 +1,14 @@
 const rawConfig = {
 	"domainWhiteList": [
 		".ixigua.com","aidi.tv",".appinn.com","bimiacg4.net",".dj92cc.net",
-		".gamersky.com",".leeyiding.com","netflix.",".novipnoad.com",
+		".gamersky.com",".mikudm.com","netflix.",".novipnoad.com",
 		".olevod.tv",".voflix.com",".youzhidy.com",".zhihu.com",".zhlhh.com"
 	],
 	"useJX": 999,
 	"jxUrls": [
 		{"name":"盒子","url":"https://jx.jsonplayer.com/player/?url="},
 		{"name":"88看","url":"https://vip.sp-flv.com:8443/?url="},
-		{"name":"诺讯","url":"https://www.nxflv.com/?url="},
+		{"name":"咸鱼","url":"https://jx.xyflv.com/?url="},
 		{"name":"虾米","url":"https://jx.xmflv.com/?url="}
 	],
 	"useShaka": true,
