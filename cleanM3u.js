@@ -4,7 +4,8 @@ export default function() {
 	const itemsHandle = [// 处理逻辑组: 神马云、量子云、非凡云
 		/^https:\/\/(yzzy|hdzy|vip|tudou)\d*\.play-cdn\d*\.com/,
 		/^https:\/\/(vip\d*\.lz-?cdn|v\.cdnlz)\d*\./,
-		/^https:\/\/(svips)?vip\.ffzy-?(?:play|online|read)\d*\./
+		/^https:\/\/(svips)?vip\.ffzy-?(?:play|online|read)\d*\./,
+		//暴风云 /^https:\/\/s\d*\.bfengbf\.com/ /(#EXT-X-DISCONTINUITY\n).{11,388}\1/gs
 	];
 	const urlFromArg = arg => {
 		if ( typeof arg === 'string' ) { return arg; }
