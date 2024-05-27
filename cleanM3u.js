@@ -3,7 +3,7 @@ export default function() {
 	// const reFf0Lz = /\.ts\s+(#EXT-X-DISCONTINUITY).+?\1/gs;
 	const itemsHandle = [// 处理逻辑组: 神马云、量子云、非凡云
 		/^https:\/\/(yzzy|hdzy|vip|tudou)\d*\.play-cdn\d*\.com/,
-		/^https:\/\/(vip\d*\.lz-?cdn|v\.cdnlz)\d*\./,
+		/^https:\/\/(vip\d*\.lz-?cdn|v\d*\.cdnlz)\d*\./,
 		/^https:\/\/(svips)?vip\.ffzy-?(?:play|online|read)\d*\./,
 		//暴风云 /^https:\/\/s\d*\.bfengbf\.com/ /(#EXT-X-DISCONTINUITY\n).{11,388}\1/gs
 	];
@@ -20,10 +20,11 @@ export default function() {
 		if (i < 22) return lines.join('\n');
 		// const idx = lines[i].length-7;
 		// console.log('index: %i ; char: %s ; ID string: %s',idx,lines[i][idx],lines[i].slice(idx));
-		for (;lines[i].at(-8) !== '0';i-=2) {
+		for (;lines[i].slice(-9,-7) !== '00';i-=2) {
 			lines[i] = lines[i-1] = void 0;
 		}
 		const m = lines[i].match(/(\d{4})\.ts$/);
+		// console.log('last line %i: %s', i, lines[i]);
 		if (!m) return lines.join('\n');
 
 		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa005123.ts

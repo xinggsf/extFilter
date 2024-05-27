@@ -4,7 +4,7 @@ const router = {
 	'www.555kyy.com': '.dplayer-web-fullscreen-fix .fixedGroup, .dplayer-web-fullscreen-fix .sidebar, .dplayer-web-fullscreen-fix .header, .dplayer-web-fullscreen-fix .module-player-side{display:none!important} .dplayer:fullscreen video{height:100%!important} .MacPlayer, :not(.dplayer-fulled) video{height:600px!important}',
 	//'www.ourxh.com': '.dplayer-web-fullscreen-fix #player-sidebar-is, .dplayer-web-fullscreen-fix .myui-panel_bd{display:none!important}',
 	'acgndmku.com': 'iframe#buffer, iframe#install, .dplayer-web-fullscreen-fix .hot_banner, #fd_tips, .dplayer-web-fullscreen-fix .foot ul.extra{display:none!important} #topnav{position: absolute!important}',
-	'www.ddzvod.com':'iframe#buffer, iframe#install{display:none!important} body:not(.dplayer-web-fullscreen-fix) .MacPlayer{height:654px!important} video{max-height:100%!important}',
+	'www.ddzvod.com':'iframe#buffer, iframe#install{display:none!important} body:not(.dplayer-web-fullscreen-fix) .bofang{height:654px!important} video{max-height:100%!important}',
 	// 'ke.qq.com': '.study-video-wrapper--gray:after{display:none!important}',
 	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}',
 	'wetv.vip': '.gm-fp-body .play__aside--right, .gm-fp-body .sidebar, .gm-fp-body header{display:none!important}'
