@@ -2,8 +2,11 @@
 export default function() {
 	// const reFf0Lz = /\.ts\s+(#EXT-X-DISCONTINUITY).+?\1/gs;
 	const itemsHandle = [// 处理逻辑组: 神马云、量子云、非凡云
+		/^https:\/\/cdn\d*\.vipyz-cdn\d*\.com/,
 		/^https:\/\/(yzzy|hdzy|vip|tudou)\d*\.play-cdn\d*\.com/,
-		/^https:\/\/(vip\d*\.lz-?cdn|v\d*\.cdnlz)\d*\./,
+		/^https:\/\/v\d*\.yzzy\d*-play\.com/,
+		/^https:\/\/(vip|hd)\d*\.lz-?cdn\d*\.com/,
+		/^https:\/\/v\d*\.cdnlz\d*\.com/,
 		/^https:\/\/(svips)?vip\.ffzy-?(?:play|online|read)\d*\./,
 		//暴风云 /^https:\/\/s\d*\.bfengbf\.com/ /(#EXT-X-DISCONTINUITY\n).{11,388}\1/gs
 	];
