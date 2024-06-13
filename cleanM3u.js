@@ -1,26 +1,37 @@
 //UBO m3u-prune.js https://en.wikipedia.org/wiki/M3U
 export default function() {
-	const itemsHandle = [// 处理逻辑组: 3量子云、1非凡云、3神马云
-		'lzcdn',
-		'lz-cdn',
-		'cdnlz',
-		'ffzy',
-		'vipyz-cdn',
-		'play-cdn',
-		'yzzy',
-		//暴风云 /^https:\/\/s\d*\.bfengbf\.com/ /(#EXT-X-DISCONTINUITY\n).{11,388}\1/gs
+	const itemsHandle = [
+		'lzcdn','lz-cdn','cdnlz', //量子云
+		'ffzy', //非凡云
+		'vipyz-cdn','play-cdn','yzzy', //神马云
+		'bfengbf', //暴风云
+		'ukubf' //U酷云
 	];
 	const urlFromArg = arg => {
 		if ( typeof arg === 'string' ) { return arg; }
 		if ( arg instanceof Request ) { return arg.url; }
 		return String(arg);
 	};
-	const matchM3u = url => url.endsWith('.m3u8') && /\.([\w\-]+)\.com/.test(url) && itemsHandle.some(k => RegExp.$1.startsWith(k));
+	let mainDomain = '';
+	const matchM3u = url => {
+		if (url.endsWith('.m3u8') && /\.([\w\-]+)\.com/.test(url)) {
+			mainDomain = RegExp.$1;
+			return itemsHandle.some(k => mainDomain.startsWith(k));
+		}
+	};
 	const pruner = (text) => {
-		if (/^\s*#EXTM3U/.test(text) === !1) return text;
-		const lines = text.trim().split('\n').filter(l => l !== '#EXT-X-DISCONTINUITY');
+		text = text.trim();
+		if (!text.startsWith('#EXTM3U') || text.length < 122) return text;
+		if (itemsHandle.findIndex(k => mainDomain.startsWith(k)) > 6){
+			if (text.slice(81,122).includes('\n#EXT-X-DISCONTINUITY'))
+				text = text.replace('\n#EXT-X-DISCONTINUITY','');
+			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
+			return text.replace(/(\n#EXT-X-DISCONTINUITY).{99,555}\1/gs,'');
+		}
+
+		const lines = text.split('\n').filter(l => l !== '#EXT-X-DISCONTINUITY');
 		let i = lines.length-2;
-		if (i < 22) return lines.join('\n');
+		if (i < 55) return lines.join('\n');
 		for (;lines[i].slice(-9,-7) !== '00';i-=2) {
 			lines[i] = lines[i-1] = void 0;
 		}
