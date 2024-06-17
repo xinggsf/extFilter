@@ -5,6 +5,7 @@ export default function() {
 		'ffzy', //非凡云
 		'vipyz-cdn','play-cdn','yzzy', //神马云
 		'bfengbf', //暴风云
+		'bfikuncdn', //艾昆云
 		'ukubf' //U酷云
 	];
 	const urlFromArg = arg => {
@@ -12,21 +13,21 @@ export default function() {
 		if ( arg instanceof Request ) { return arg.url; }
 		return String(arg);
 	};
-	let mainDomain = '';
+	let idxDomain = -1;
 	const matchM3u = url => {
-		if (url.endsWith('.m3u8') && /\.([\w\-]+)\.com/.test(url)) {
-			mainDomain = RegExp.$1;
-			return itemsHandle.some(k => mainDomain.startsWith(k));
+		if (url.endsWith('.m3u8') && /\.?([\w\-]+)\.com/.test(url)) {
+			idxDomain = itemsHandle.findIndex(k => RegExp.$1.startsWith(k));
+			return idxDomain > -1;
 		}
 	};
 	const pruner = (text) => {
 		text = text.trim();
 		if (!text.startsWith('#EXTM3U') || text.length < 122) return text;
-		if (itemsHandle.findIndex(k => mainDomain.startsWith(k)) > 6){
+		if (idxDomain > 6) {
 			if (text.slice(81,122).includes('\n#EXT-X-DISCONTINUITY'))
 				text = text.replace('\n#EXT-X-DISCONTINUITY','');
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
-			return text.replace(/(\n#EXT-X-DISCONTINUITY).{99,555}\1/gs,'');
+			return text.replace(/(\n#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
 
 		const lines = text.split('\n').filter(l => l !== '#EXT-X-DISCONTINUITY');
