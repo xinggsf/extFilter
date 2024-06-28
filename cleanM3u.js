@@ -3,7 +3,7 @@ export default function() {
 	const items = [
 		/^lz-?cdn/,'cdnlz', //量子云
 		'ffzy', //非凡云
-		'vipyz-cdn','play-cdn','yzzy',/playback$/, //神马云 high\d*-playback
+		'hdzyk','play-cdn','vipyz-cdn','yzzy',/playback$/, //神马云 high\d*-playback
 	];
 	const urlFromArg = arg => {
 		if ( typeof arg === 'string' ) { return arg; }
@@ -22,14 +22,14 @@ export default function() {
 		text = text.trim();
 		if (!text.startsWith('#EXTM3U') || text.length < 122) return text;
 		if (!curItem) {
-			if (text.slice(81,122).includes('\n#EXT-X-DISCONTINUITY')) {
-				text = text.replace('\n#EXT-X-DISCONTINUITY','');
+			if (text.slice(91,133).includes('#EXT-X-DISCONTINUITY')) {
+				text = text.replace(/\s+#EXT-X-DISCONTINUITY/,'');
 			}
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
-			return text.replace(/(\n#EXT-X-DISCONTINUITY).+?\1/gs,'');
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
 
-		const lines = text.split(/\n#EXT-X-DISCONTINUITY\n|\n/);
+		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
 		let i = lines.length-2;
 		if (i < 55) return lines.join('\n');
 		for (;lines[i].slice(-9,-7) !== '00';i-=2) {
