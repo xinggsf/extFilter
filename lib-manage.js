@@ -3,7 +3,7 @@ import cfg from "./config.js";
 cfg.init();
 const allMVs = new Map();
 const saveMV = (tabId, detail) => {
-	if (detail.url.endsWith('.ts')) return;
+	if (detail.url.endsWith('.ts') || detail.url.includes('.ts?',33)) return;
 	let text = '1', a = allMVs.get(tabId);
 	if (!a) allMVs.set(tabId, Array.of(detail));
 	else if (a.some(k => k.url == detail.url)) return;
