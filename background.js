@@ -135,6 +135,10 @@ chrome.runtime.onMessage.addListener((msg, sender, cb) => {
 	case 'getState':
 		cb(lm.enabled);
 		break;
+	case 'clearMVList':
+		allMVs.delete(msg.tabId);
+		chrome.browserAction.setBadgeText({tabId: msg.tabId, text:'0'});
+		break;
 	case 'getMVList':
 		cb(allMVs.get(msg.tabId));
 		break;
@@ -217,7 +221,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 // object xmlhttprequest
 chrome.webRequest.onBeforeRequest.addListener(
 	filter, {
-		urls: ['http://app.dodoge.me/static/danmu/m3u8/play.php*','*://*/*.flv*','*://*/*.ogg*','*://*/*.mp4*','*://*/*.mpd*','*://*/*.m3u8*','*://*/*.webm*'],
+		urls: ['*://*/*.flv*','*://*/*.mpd*','*://*/*.m3u8','*://*/*.m3u8?*'],
 		types: ['object','xmlhttprequest']
 	},
     ['blocking']

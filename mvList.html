@@ -21,7 +21,7 @@ h2 {
     text-align: center;
 }
 .box {
-    border: 3px solid #8bd;
+    border: 2px solid #8bd;
     overflow: hidden;
     width:auto;
     height:auto;
@@ -68,14 +68,21 @@ dd {
     vertical-align: middle;
     width: 42%;
 }
+#copyList {
+	float: right;
+}
 </style>
 </head>
 <body>
 <h2>已捕获媒体列表</h2>
+<div class="act">
+	<a id="clearList" href="javascript:void(0)">清除列表</a>
+	<a id="copyList" href="javascript:void(0)">复制列表</a>
+</div>
 <div class="box">
 	<dl>
-		<dt>地址栏</dt>
 		<dd>媒体类型</dd><dd>媒体字节大小</dd><dd class="last-col">播放</dd>
+		<dt>地址栏</dt>
 	</dl>
 </div>
 <script src="./utils.js"></script>
