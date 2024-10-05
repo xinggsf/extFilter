@@ -28,6 +28,11 @@ export default function() {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
+		if ('ffzy' == curItem) {
+			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{99,280}\1/gs,'')
+				.replace(/\s+#EXT-X-DISCONTINUITY/g,'');
+		}
 
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
 		let i = lines.length-2;
