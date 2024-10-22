@@ -1,8 +1,8 @@
 const rawConfig = {
 	"domainWhiteList": [
-		".ixigua.com","aidi.tv",".appinn.com","bimiacg4.net",".dj92cc.net",
-		".gamersky.com",".mikudm.com","netflix.",".novipnoad.com",
-		".olevod.tv",".voflix.com",".youzhidy.com",".zhihu.com",".zhlhh.com"
+		".ixigua.com",".appinn.com","bimiacg4.net",".dj92cc.net",
+		".gamersky.com","netflix.",".novipnoad.net",
+		".olevod.com",".youzhidy.com",".zhihu.com",".zhlhh.com"
 	],
 	"useJX": 999,
 	"jxUrls": [
@@ -16,7 +16,7 @@ const rawConfig = {
 	"hlsCache": false,
 	"autoWebFull": false,
 	"hostsDisableWF": [".yatu.tv","weixin.qq.com"],
-	"domainsCleanM3u": [".yatu.tv",".xyhdmw.",".xyhdm.cc","yhdmw7.com",".mgtvys.",".qdm66.com",".ddzvod.com",".nnvod.com"],
+	"domainsCleanM3u": [".agedm.org",".yatu.tv",".xyhdmw.",".xyhdm.cc","yhdm002.com","yhdm95.com","yhdmw7.com",".mgtvys.",".ddzvod.com",".nnvod.com"],
 	"hostsGM": [".douban.com","dandanzan.net","nnyy.in",".btnull."]
 };
 
