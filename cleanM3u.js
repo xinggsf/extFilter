@@ -1,9 +1,10 @@
 //UBO m3u-prune.js https://en.wikipedia.org/wiki/M3U
 export default function() {
 	const items = [
+		'hmrv', 'heimuer', //木耳云
 		/^lz-?cdn/,'cdnlz', //量子云
 		'ffzy', //非凡云
-		'hdzyk','play-cdn','vipyz-cdn','yzzy',/playback$/, //神马云 high\d*-playback
+		'hdzyk','high','play-cdn','vipyz-cdn','yzzy' //神马云 high\d*-playback
 	];
 	const urlFromArg = arg => {
 		if ( typeof arg === 'string' ) { return arg; }
@@ -12,7 +13,7 @@ export default function() {
 	};
 	let curItem = null; // 匹配项
 	const matchM3u = url => {
-		if (url.endsWith('.m3u8') && /\.?([\w\-]+)\.com/.test(url)) {
+		if (url.endsWith('.m3u8') && /\.?([\w\-]+)\.[a-z]{2,5}[:\/]/.test(url)) {
 			const u = RegExp.$1;
 			curItem = items.find(k => k instanceof RegExp ? k.test(u) : u.startsWith(k));
 			return true;
@@ -20,18 +21,26 @@ export default function() {
 	};
 	const pruner = (text) => {
 		text = text.trim();
-		if (!text.startsWith('#EXTM3U') || text.length < 122) return text;
+		if (!text.startsWith('#EXTM3U') || text.length < 188) return text;
+		if (text.slice(66,188).includes('#EXT-X-DISCONTINUITY')) {
+			text = text.replace(/\s+#EXT-X-DISCONTINUITY/,'');
+		}
+
 		if (!curItem) {
-			if (text.slice(91,133).includes('#EXT-X-DISCONTINUITY')) {
-				text = text.replace(/\s+#EXT-X-DISCONTINUITY/,'');
-			}
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
 		if ('ffzy' == curItem) {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
-			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{99,280}\1/gs,'')
-				.replace(/\s+#EXT-X-DISCONTINUITY/g,'');
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{99,288}\1/gs,'')
+				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
+		}
+		if ('heimuer' == curItem || 'hmrv' == curItem) {
+			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/s,'')
+				// 3或4个相同时长的ts项（正则子组2）
+				.replace(/\s+(#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2[^]{222,888}\1/g,'')
+				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
@@ -76,6 +85,7 @@ export default function() {
 		apply: async (target, thisArg, args) => {
 			const url = urlFromArg(args[1]);
 			if (matchM3u(url)) thisArg.addEventListener('readystatechange', function() {
+				// thisArg.finalUrl && matchM3u(thisArg.finalUrl);
 				if ( thisArg.readyState !== 4 ) { return; }
 				const type = thisArg.responseType;
 				if ( type !== '' && type !== 'text' ) { return; }
