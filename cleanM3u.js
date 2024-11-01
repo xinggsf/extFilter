@@ -6,16 +6,19 @@ export default function() {
 		'ffzy', //非凡云
 		'hdzyk','high','play-cdn','vipyz-cdn','yzzy' //神马云 high\d*-playback
 	];
+	const hasFileExt = (url, ex) => {
+		return url.endsWith(ex) || url.includes(ex +'?', 22);
+	};
 	const urlFromArg = arg => {
 		if ( typeof arg === 'string' ) { return arg; }
 		if ( arg instanceof Request ) { return arg.url; }
 		return String(arg);
 	};
-	let curItem = null; // 匹配项
+	let iItem = 0; // 匹配项
 	const matchM3u = url => {
-		if (url.endsWith('.m3u8') && /\.?([\w\-]+)\.[a-z]{2,5}[:\/]/.test(url)) {
+		if (hasFileExt(url, '.m3u8') && /\.?([\w\-]+)\.[a-z]{2,5}[:\/]/.test(url)) {
 			const u = RegExp.$1;
-			curItem = items.find(k => k instanceof RegExp ? k.test(u) : u.startsWith(k));
+			iItem = items.findIndex(k => k instanceof RegExp ? k.test(u) : u.startsWith(k));
 			return true;
 		}
 	};
@@ -26,16 +29,16 @@ export default function() {
 			text = text.replace(/\s+#EXT-X-DISCONTINUITY/,'');
 		}
 
-		if (!curItem) {
+		if (iItem == -1) {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
-		if ('ffzy' == curItem) {
+		if (4 == iItem) {//非凡云
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
-			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{99,288}\1/gs,'')
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{188,281}\1/gs,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
-		if ('heimuer' == curItem || 'hmrv' == curItem) {
+		if (iItem < 2) {//木耳云
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/s,'')
 				// 3或4个相同时长的ts项（正则子组2）
@@ -45,7 +48,6 @@ export default function() {
 
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
 		let i = lines.length-2;
-		if (i < 55) return lines.join('\n');
 		for (;lines[i].slice(-9,-7) !== '00';i-=2) {
 			lines[i] = lines[i-1] = void 0;
 		}
