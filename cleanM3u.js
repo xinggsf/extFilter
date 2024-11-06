@@ -42,7 +42,7 @@ export default function() {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/s,'')
 				// 3或4个相同时长的ts项（正则子组2）
-				.replace(/\s+(#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2[^]{222,888}\1/g,'')
+				.replace(/\s+(#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2.+(\2.+)?\n\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 
