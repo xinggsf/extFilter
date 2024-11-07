@@ -88,7 +88,7 @@ const uu = {
 				const opts = {
 					maxBufferSize: 36 << 20, // 36MB
 					maxBufferLength: buffSize,
-					maxMaxBufferLength: buffSize,
+					maxMaxBufferLength: buffSize + 9,
 					backBufferLength: hlsCache ? Infinity : 9
 				};
 				args[0] = Object.assign(args[0] || {}, opts);
