@@ -108,8 +108,8 @@ const handleMessage = async(v, url, vType='auto') => {
 		v.src = url;
 		return;
 	}
-	// yhdmw7.com host为页面域名
-	if (/\byhdmw\d+\.com/.test(host)) url = url.replace(/(\.com)\d+/,'$1');
+	// yhdmw7.com yhdm95.com host为页面域名
+	if (/\byhdmw?\d+\.com/.test(host)) url = url.replace(/(\.com)\d+/,'$1');
 
 	if (typeof ss == 'string') dom.style({}, ss);
 	else if (typeof ss == 'function') ss();
@@ -156,7 +156,7 @@ const handleMessage = async(v, url, vType='auto') => {
 	}
 	else {
 		let {offsetWidth: w, offsetHeight: h} = v;
-		if (h < w*0.5 || h > w*0.7) h = w*0.55;
+		if (h < w*0.5 || h > w*0.7) h = w*0.53 | 0;
 		p = document.createElement('div');
 		// const s = v.matches(':only-child') ? `width:100%;height:100%` : `width:${w}px;height:${h}px`;
 		p.setAttribute('style', `width:100%;height:${h}px`);
