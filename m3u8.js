@@ -1,11 +1,31 @@
 const host = location.hostname;
+let cfg, dp;
 const {r1, sleep, hookHls, dom, log, q, getPlayType} = uu;
 const router = {
 	'www.agedm.org': '.ratio-16x9{--bs-aspect-ratio:0 !important}',
-	'www.ddzvod.com':'iframe#buffer, iframe#install{display:none!important} body:not(.dplayer-web-fullscreen-fix) .bofang{height:654px!important} video{max-height:100%!important}',
+	'www.ddzvod.com':
+		`iframe#buffer, iframe#install{
+			display:none!important
+		}
+		body:not(.dplayer-web-fullscreen-fix) .bofang{
+			height:654px!important
+		}
+		video{
+			max-height:100%!important
+		}`,
+	'v.qq.com':
+		`.dplayer-web-fullscreen-fix #mod_player~*,
+		.dplayer-web-fullscreen-fix #shortcut,
+		.dplayer-web-fullscreen-fix .site_head{
+			display:none!important
+		}`,
+	'wetv.vip':
+		`.gm-fp-body .play__aside--right,
+		.gm-fp-body .sidebar,
+		.gm-fp-body header{
+			display:none!important
+		}`
 	// 'ke.qq.com': '.study-video-wrapper--gray:after{display:none!important}',
-	'v.qq.com': '.dplayer-web-fullscreen-fix #mod_player~*, .dplayer-web-fullscreen-fix #shortcut, .dplayer-web-fullscreen-fix .site_head{display:none!important}',
-	'wetv.vip': '.gm-fp-body .play__aside--right, .gm-fp-body .sidebar, .gm-fp-body header{display:none!important}'
 };
 router['www.nnvod.com'] = router['www.ddzvod.com'];
 const ss = router[host];
@@ -17,8 +37,6 @@ const getStyle = (o, s) => {
 	s = s.replace(/([A-Z])/g,'-$1').toLowerCase();
 	return getComputedStyle(o)?.getPropertyValue(s);
 };
-
-let cfg,dp;
 
 const isMVFlash = e => {
 	const isEmbed = e.matches('embed');
@@ -89,7 +107,7 @@ const createPlayer = async (p, url, type = 'auto') => {
 	await sleep(99);
 	const c = dp.container, mp = c.closest('.MacPlayer');
 	c.closest('body > *')?.classList.add('gm-dp-zTop');
-	if (mp?.offsetHeight != c.offsetHeight) {
+	if (mp && mp.offsetHeight != c.offsetHeight) {
 		mp.style.height = c.offsetHeight + 'px';
 	}
 	cfg.autoWebFull && !cfg.hostsDisableWF.some(k => host.includes(k)) && dp.fullScreen.request('web');
@@ -179,9 +197,9 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 });
 
 (async function (){
+	const {default: cleanAds} = await import("./cleanM3u.js");
 	const {default: api} = await import("./config.js");
 	cfg = await api.read();
-	const {default: cleanAds} = await import("./cleanM3u.js");
 	if (cfg.domainsCleanM3u.some(k => host.includes(k))) {
 		cleanAds();
 	}

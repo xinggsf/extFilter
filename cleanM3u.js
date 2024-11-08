@@ -42,25 +42,20 @@ export default function() {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/s,'')
 				// 3或4个相同时长的ts项（正则子组2）
-				.replace(/\s+(#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2.+(\2.+)?\n\1/g,'')
+				.replace(/(\n#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2.+(\2.+)?\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
 		let i = lines.length-2;
-		for (;lines[i].slice(-9,-7) !== '00';i-=2) {
+		for (;!+lines[i].slice(-9,-3);i-=2) {
 			lines[i] = lines[i-1] = void 0;
 		}
-		const m = lines[i].match(/(\d{4})\.ts$/);
-		if (!m) return lines.join('\n');
+		const max = +lines[i].slice(-8,-3);
 
 		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa005123.ts
-		i -= 6;
-		for (const max = +m[1];i > 33;i-=2) {
-			if (lines[i].at(-8) === '0') {
-				const n = +lines[i].slice(-7, -3);
-				if (n < max) continue;
-			}
+		for (i-=6;i > 33;i-=2) {
+			if (+lines[i].slice(-9,-3) < max) continue;
 			lines[i] = lines[i-1] = void 0;
 		}
 		console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
