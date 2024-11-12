@@ -45,17 +45,22 @@ export default function() {
 				.replace(/(\n#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2.+(\2.+)?\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
+		if (iItem > 4) {//神马云
+			const n = text.indexOf('#EXT-X-DISCONTINUITY', text.length - 288);
+			if (n > 0) text = text.slice(0,n) + '#EXT-X-ENDLIST';
+		}
 
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
 		let i = lines.length-2;
-		for (;!+lines[i].slice(-9,-3);i-=2) {
-			lines[i] = lines[i-1] = void 0;
-		}
+		// for (;!/^0\d+$/.test(lines[i].slice(-9,-3));i-=2) {
+			// lines[i] = lines[i-1] = void 0;
+		// }
 		const max = +lines[i].slice(-8,-3);
+		const llen = lines[i].length;
 
 		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa005123.ts
 		for (i-=6;i > 33;i-=2) {
-			if (+lines[i].slice(-9,-3) < max) continue;
+			if (llen == lines[i].length && +lines[i].slice(-9,-3) < max) continue;
 			lines[i] = lines[i-1] = void 0;
 		}
 		console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
