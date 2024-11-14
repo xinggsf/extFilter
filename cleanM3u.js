@@ -40,7 +40,7 @@ export default function() {
 		}
 		if (iItem < 2) {//木耳云
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
-			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/s,'')
+			return text.replace(/(\n#EXT-X-DISCONTINUITY)\n.+\n.+\1/,'')
 				// 3或4个相同时长的ts项（正则子组2）
 				.replace(/(\n#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2.+(\2.+)?\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
@@ -57,9 +57,9 @@ export default function() {
 		// }
 		const max = +lines[i].slice(-8,-3);
 		const llen = lines[i].length;
-
-		// const preWord = lines[i].slice(-10,-7); "a00" line[i] : adfa005123.ts
+		// const preWord = lines[i].slice(-12,-9); "dfa" line[i] : adfa005123.ts
 		for (i-=6;i > 33;i-=2) {
+			// -9 位断定为 0
 			if (llen == lines[i].length && +lines[i].slice(-9,-3) < max) continue;
 			lines[i] = lines[i-1] = void 0;
 		}

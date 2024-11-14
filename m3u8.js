@@ -156,16 +156,6 @@ const handleMessage = async(v, url, vType='auto') => {
 			if (dp) dp.container.hidden = true;
 		});
 	}
-	else if (/eacg\.net|wsdy\.top/.test(host)) {
-		p = q('.mo-head-info');
-		if (p) {
-			p.classList.remove('mo-part-fixs');
-			p.style.cssText = 'position: absolute';
-		}
-		p = v.parentNode;
-		p.innerHTML = p.className = '';
-		p.style.cssText = 'width:100%;height:80vh;';
-	}
 	else if (host == 'ke.qq.com') {
 		p = v.parentNode;
 		p.innerHTML = '<div style="width:100%;height:100%"></div>';
