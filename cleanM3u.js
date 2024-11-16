@@ -33,16 +33,16 @@ export default function() {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
-		if (4 == iItem) {//非凡云
-			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
+		if (4 == iItem) {
+			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{188,281}\1/gs,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
-		if (iItem < 2) {//木耳云
-			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
+		if (iItem < 2) {
+			console.log('合金HTML5扩展：已删除木耳云的m3u8广告!');
 			return text.replace(/(\n#EXT-X-DISCONTINUITY)\n.+\n.+\1/,'')
 				// 3或4个相同时长的ts项（正则子组2）
-				.replace(/(\n#EXT-X-DISCONTINUITY)(\n#EXTINF:\d+\.\d+,\n).+\2.+\2.+(\2.+)?\1/g,'')
+				.replace(/(\n#EXT-X-DISCONTINUITY)(\n.+\n).+\2.+\2.+(\2.+)?\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (iItem > 4) {//神马云
@@ -63,7 +63,7 @@ export default function() {
 			if (llen == lines[i].length && +lines[i].slice(-9,-3) < max) continue;
 			lines[i] = lines[i-1] = void 0;
 		}
-		console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
+		console.log(`合金HTML5扩展：已删除${iItem > 4 ? '神马' : '量子'}云的m3u8广告!`);
 		return lines.filter(l => l !== void 0).join('\n');
 	};
 	const realFetch = self.fetch;

@@ -3,31 +3,28 @@ let cfg, dp;
 const {r1, sleep, hookHls, dom, log, q, getPlayType} = uu;
 const router = {
 	'www.agedm.org': '.ratio-16x9{--bs-aspect-ratio:0 !important}',
-	'www.ddzvod.com':
-		`iframe#buffer, iframe#install{
-			display:none!important
+	'www.ddzvod.com': `video{max-height:100% !important}`,
+	'www.dmmiku.com': `
+		.dplayer-web-fullscreen-fix ul.extra.clearfix,
+		.billhao-head-image, #topnav {
+			z-index: 2 !important;
+			position: static !important;
 		}
-		body:not(.dplayer-web-fullscreen-fix) .bofang{
-			height:654px!important
-		}
-		video{
-			max-height:100%!important
-		}`,
-	'v.qq.com':
-		`.dplayer-web-fullscreen-fix #mod_player~*,
-		.dplayer-web-fullscreen-fix #shortcut,
-		.dplayer-web-fullscreen-fix .site_head{
-			display:none!important
-		}`,
-	'wetv.vip':
-		`.gm-fp-body .play__aside--right,
-		.gm-fp-body .sidebar,
-		.gm-fp-body header{
-			display:none!important
-		}`
+		/*
+		.dplayer-web-fullscreen-fix #play_page > :nth-child(-n+2),
+		.dplayer-web-fullscreen-fix ul.extra.clearfix {
+			display: none !important;
+		} */`,
 	// 'ke.qq.com': '.study-video-wrapper--gray:after{display:none!important}',
+	'wetv.vip': `
+		.gm-fp-body .play__aside--right,
+		.gm-fp-body .sidebar,
+		.gm-fp-body header {
+			display: none !important;
+		}`
 };
 router['www.nnvod.com'] = router['www.ddzvod.com'];
+router['www.dmmiku.net'] = router['www.dmmiku.com'];
 const ss = router[host];
 const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
 const iframes = document.getElementsByTagName('iframe');
@@ -105,10 +102,13 @@ const createPlayer = async (p, url, type = 'auto') => {
 		this.plugins.hls?.destroy();
 	});
 	await sleep(99);
-	const c = dp.container, mp = c.closest('.MacPlayer');
+	const c = dp.container;
 	c.closest('body > *')?.classList.add('gm-dp-zTop');
-	if (mp && mp.offsetHeight != c.offsetHeight) {
-		mp.style.height = c.offsetHeight + 'px';
+	const h = c.offsetHeight;
+	const mp = c.closest('.MacPlayer');
+	if (mp && mp.offsetHeight != h) {
+		mp.style.height = h + 'px';
+		if (mp.parentNode.offsetHeight < h) mp.parentNode.style.height = h + 'px';
 	}
 	cfg.autoWebFull && !cfg.hostsDisableWF.some(k => host.includes(k)) && dp.fullScreen.request('web');
 	// c.scrollIntoView({block:'nearest',behavior:'smooth'});
