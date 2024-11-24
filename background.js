@@ -6,8 +6,6 @@ const _noBlock = {cancel: !1};
 const playPage = chrome.runtime.getURL('play.html');
 const tabIdList = new Set([-1]);
 const cacheTabs = new Set();
-// 确保不重复生成斗鱼间直播地址
-const needUrlForDY = (tabId) => allMVs.get(tabId)?.length < 4;
 const getJXUrl = () => {
 	const {useJX,jxUrls} = cfg.value;
 	if (useJX < 0) return;
@@ -30,7 +28,7 @@ const delHeads = (names, headers) => headers.filter(k => {
 	if (!~i) return true;
 	names.splice(i,1);
 });
-// 增删改头部
+// 增删改CRUD头部
 const crudHeads = (names, headers) => {
 	const rs = headers.filter(k => {
 		const hname = k.name.toLowerCase();
@@ -72,7 +70,7 @@ chrome.webNavigation.onCommitted.addListener(({tabId,url,frameId}) => {
 	chrome.tabs.executeScript(tabId,{file:'m3u8.js',runAt:'document_start'});
 });
 
-const noHandleMV = ['vip.sp-flv.com','vip.jsjinfu.com','vidhub.','json.xmflv.cc','.ssdm.cc','.qcheng.cc']; // m3u8.qwertwe.top
+const noHandleMV = ['vip.sp-flv.com','vip.jsjinfu.com','json.xmflv.cc'];
 // 处理子框架
 const handleFrame = async(url,tabId,frameId,parentFrameId,vType='') => {
 	if (!lm.enabled) return;
@@ -168,7 +166,7 @@ chrome.webRequest.onBeforeRequest.addListener(({url,tabId,frameId,parentFrameId}
 			const jx = getJXUrl();
 			if (!jx) return _noBlock;
 			const vid = ulink.searchParams.get('firstVid') || ulink.searchParams.get('vid');
-			return {redirectUrl: jx +`https://v.qq.com/x/page/${vid}.html`};
+			return {redirectUrl: `${jx}https://v.qq.com/x/page/${vid}.html`};
 		}
 
 		const v = _getMVFromFrame();
@@ -186,7 +184,7 @@ chrome.webRequest.onBeforeRequest.addListener(({url,tabId,frameId,parentFrameId}
     { 	urls: [
 			'https://player.youku.com/embed/*',
 			'https://film.qq.com/*',
-			'*://*/*.m3u8*','*://*/*.mp4*'
+			'https://*/*.m3u8'
 		],
 		types: ['sub_frame'] },
     ['blocking']
@@ -201,9 +199,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 		if (fname.startsWith('flv.')) return {redirectUrl: baseAddr + 'flv.min.js'};
 		if (fname.startsWith('dash.')) return {redirectUrl: baseAddr + 'dash.all.min.js'};
 		if (fname.startsWith('hls.daye202')) return _noBlock; //美果TV
-		if (fname.startsWith('hls.') || url.endsWith('/Nxplayer/NxHls.min.js')) return {redirectUrl: baseAddr + 'hls.min.js'};
-		//,'https://www.nxflv.com/Nxplayer/Nxplayer.min.js','https://www.nxflv.com/Nxplayer/NxHls.min.js'
-		if (fname.startsWith('dplayer.') || url.endsWith('/Nxplayer/Nxplayer.min.js')) {
+		if (fname.startsWith('hls.')) return {redirectUrl: baseAddr + 'hls.min.js'};
+		if (fname.startsWith('dplayer.')) {
 			chrome.tabs.insertCSS(tabId,{frameId,file:'player-fix.css'});
 			return {redirectUrl: baseAddr + 'DPlayer.min.js'};
 		}
@@ -284,6 +281,7 @@ chrome.webRequest.onHeadersReceived.addListener(
 			return {responseHeaders: head};
 		}
 		let r = _noBlock;
+		// 缓存媒体切片
 		if (cacheTabs.has(tabId) &&
 			head.some(k => k.name.toLowerCase() == 'accept-ranges' && k.value == 'bytes'))
 		{
@@ -320,7 +318,7 @@ chrome.webRequest.onHeadersReceived.addListener(
 			}
 			else {
 				info.size = getMVSizeFromHead(head);
-				if (info.size < 5<<20) return r; // 5Mb
+				if (info.size < 5<<20) return r; // 5MB
 				info.kind = 'auto';
 			}
 		}
