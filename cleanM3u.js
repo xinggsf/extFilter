@@ -25,7 +25,7 @@ export default function() {
 	const pruner = (text) => {
 		text = text.trim();
 		if (!text.startsWith('#EXTM3U') || text.length < 188) return text;
-		if (text.slice(66,188).includes('#EXT-X-DISCONTINUITY')) {
+		if (text.slice(22,188).includes('#EXT-X-DISCONTINUITY')) {
 			text = text.replace(/\s+#EXT-X-DISCONTINUITY/,'');
 		}
 

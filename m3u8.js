@@ -3,7 +3,6 @@ let cfg, dp;
 const {r1, sleep, hookHls, dom, log, q, getPlayType} = uu;
 const router = {
 	'www.agedm.org': '.ratio-16x9{--bs-aspect-ratio:0 !important}',
-	'www.ddzvod.com': `video{max-height:100% !important}`,
 	'www.dmmiku.com': `
 		.dplayer-web-fullscreen-fix ul.extra.clearfix,
 		.billhao-head-image, #topnav {
@@ -23,7 +22,6 @@ const router = {
 			display: none !important;
 		}`
 };
-router['www.nnvod.com'] = router['www.ddzvod.com'];
 router['www.dmmiku.net'] = router['www.dmmiku.com'];
 const ss = router[host];
 const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
