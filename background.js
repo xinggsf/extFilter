@@ -100,19 +100,6 @@ const getTopFrame = ({tabId, frameId}) => {
 
 const vKindList = ['mp4','flv','m3u8','mpd','ogg','webm'];
 // const audioKinds = ['mp3','m4a','wma','ra','rm'];Manifest
-const filter = ({tabId, frameId, parentFrameId, url, type}) => {
-	if (tabIdList.has(tabId)) return _noBlock;// || !vKindList.includes(getExtName(url))
-	if (frameId != 0) {
-		handleFrame(url,tabId,frameId,parentFrameId);
-		lm.inject(tabId, url);
-	}
-	else if ('object' == type) {
-		chrome.tabs.sendMessage(tabId, {id:'mv-block',url,vType:''});
-		lm.inject(tabId, url);
-	}
-	else saveMV(tabId, {url});
-	return _noBlock;
-};
 
 chrome.runtime.onMessage.addListener((msg, sender, cb) => {
 	switch (msg.id) {
@@ -184,17 +171,20 @@ chrome.webRequest.onBeforeRequest.addListener(({url,tabId,frameId,parentFrameId}
     { 	urls: [
 			'https://player.youku.com/embed/*',
 			'https://film.qq.com/*',
-			'https://*/*.m3u8'
+			'https://*/*.m3u8*'
 		],
-		types: ['sub_frame'] },
+		types: ['sub_frame']
+	},
     ['blocking']
 );
 
 const baseAddr = chrome.runtime.getURL('lib/');
 chrome.webRequest.onBeforeRequest.addListener(
-	function({tabId, frameId, url}) {
+	function({tabId, frameId, url, type}) {
+		if (!lm.enabled || tabIdList.has(tabId) || !url.startsWith('http')) return _noBlock;
+		if ('stylesheet' == type) return {cancel: true};
 		// 1.0.10/hls.min.js 低版本hls.js不兼容
-		if (!lm.enabled || tabIdList.has(tabId) || !url.startsWith('http') || url.endsWith('/1.0.10/hls.min.js')) return _noBlock;
+		if (url.endsWith('/1.0.10/hls.min.js')) return _noBlock;
 		const fname = getFileName(url).fname.toLowerCase();
 		if (fname.startsWith('flv.')) return {redirectUrl: baseAddr + 'flv.min.js'};
 		if (fname.startsWith('dash.')) return {redirectUrl: baseAddr + 'dash.all.min.js'};
@@ -206,21 +196,26 @@ chrome.webRequest.onBeforeRequest.addListener(
 		}
 		return _noBlock;
 	},
-    { urls: ['*://*/*.min.js','https://*/js/hls.js'], types: ['script'] },
-    ['blocking']
-);
-chrome.webRequest.onBeforeRequest.addListener(
-	({url}) => ({cancel: url.startsWith('http')}),
-    { urls: ['*://*/*/DPlayer.min.css'], types: ['stylesheet'] },
+    {urls:['*://*/*.min.js','https://*/js/hls.js','*://*/*/DPlayer.min.css'],types:['script','stylesheet']},
     ['blocking']
 );
 
 // object xmlhttprequest
 chrome.webRequest.onBeforeRequest.addListener(
-	filter, {
-		urls: ['*://*/*.flv*','*://*/*.mpd*','*://*/*.m3u8','*://*/*.m3u8?*'],
-		types: ['object','xmlhttprequest']
+	function({tabId, frameId, parentFrameId, url, type}) {
+		if (tabIdList.has(tabId)) return _noBlock;// || !vKindList.includes(getExtName(url))
+		if (frameId != 0) {
+			handleFrame(url,tabId,frameId,parentFrameId);
+			lm.inject(tabId, url);
+		}
+		else if ('object' == type) {
+			chrome.tabs.sendMessage(tabId, {id:'mv-block',url,vType:''});
+			lm.inject(tabId, url);
+		}
+		else saveMV(tabId, {url});
+		return _noBlock;
 	},
+	{urls:['*://*/*.flv*','*://*/*.mpd*','*://*/*.m3u8*'],types:['xmlhttprequest','object']},
     ['blocking']
 );
 
