@@ -132,6 +132,7 @@ const handleMessage = async(v, url, vType='auto') => {
 	if (typeof ss == 'string') dom.style({}, ss);
 	else if (typeof ss == 'function') ss();
 
+	q('.close-box.tips')?.remove();
 	await sleep(99);
 	let p;
 	if (host == 'www.yatu.tv') {
