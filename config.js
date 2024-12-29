@@ -16,8 +16,8 @@ const rawConfig = {
 	"hlsCache": false,
 	"autoWebFull": false,
 	"hostsDisableWF": [".yatu.tv","weixin.qq.com"],
-	"domainsCleanM3u": [".agedm.org",".yatu.tv",".xyhdmw.",".xyhdm.cc","yhdm002.com","yhdm95.com","yhdmw7.com",".mgtvys.",".ddzvod.com",".nnvod.com"],
-	"hostsGM": [".douban.com","dandanzan.net","nunuyy5.com","nnyy.in",".btnull."]
+	"domainsCleanM3u": [".ddzvod.com",".nnvod.com"],
+	"hostsGM": ["dandanzan.net","nunuyy5.com","nnyy.in"]
 };
 
 function promisifyNoFail(thisArg, fnName, outFn = r => r) {
