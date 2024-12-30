@@ -17,7 +17,7 @@ const rawConfig = {
 	"autoWebFull": false,
 	"hostsDisableWF": [".yatu.tv","weixin.qq.com"],
 	"domainsCleanM3u": [".ddzvod.com",".nnvod.com"],
-	"hostsGM": ["dandanzan.net","nunuyy5.com","nnyy.in"]
+	"hostsGM": ["dandanzan.net","kimivod.org","nunuyy5.com","nnyy.in"]
 };
 
 function promisifyNoFail(thisArg, fnName, outFn = r => r) {

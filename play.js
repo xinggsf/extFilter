@@ -1,4 +1,3 @@
-import cleanAds from "./cleanM3u.js";
 import syncApi from "./config.js";
 
 // https://api.dogecloud.com/player/get.flv?vcode=5ac682e6f8231991&userId=17&ext=.flv  https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd
@@ -9,6 +8,16 @@ const createPlayer = (v, url, type = 'auto', curTime = 0) => {
 		theme: "#00B3FF",
 		autoplay: true,
 		screenshot: true,
+		contextmenu: [
+			{
+				text: '刷新',
+				click(player) {
+					const s = new URL(location.href);
+					s.searchParams.set('curTime', ~~player.video.currentTime);
+					location.replace(s.href);
+				}
+			}
+		],
 		container: v
 	});
 	p.on('loadedmetadata', function() {
@@ -23,7 +32,6 @@ const mvUrl = location.hash.slice(1);
 const ps = new URLSearchParams(location.search);
 
 (async function(){
-	cleanAds();
 	uu.hookHls(await syncApi.read({hlsCache:!1,buffSize:60}));
 	window.dp = createPlayer(uu.q('#player'), mvUrl, ps.get('vType'), ps.get('curTime'));
 })();
