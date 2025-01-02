@@ -24,7 +24,11 @@ export default function() {
 	};
 	const pruner = (text) => {
 		text = text.trim();
-		if (!text.startsWith('#EXTM3U') || text.length < 188) return text;
+		if (
+			text.length < 211 ||
+			!text.startsWith('#EXTM3U') ||
+			!text.endsWith('#EXT-X-ENDLIST')
+		) return text;
 		if (text.slice(22,188).includes('#EXT-X-DISCONTINUITY')) {
 			text = text.replace(/\s+#EXT-X-DISCONTINUITY/,'');
 		}
@@ -55,11 +59,10 @@ export default function() {
 		// for (;!/^0\d+$/.test(lines[i].slice(-9,-3));i-=2) {
 			// lines[i] = lines[i-1] = void 0;
 		// }
-		const max = +lines[i].slice(-8,-3);
+		const max = +lines[i].slice(-8,-3);// -9位断定为 0
 		const llen = lines[i].length;
 		// const preWord = lines[i].slice(-12,-9); "dfa" line[i] : adfa005123.ts
 		for (i-=6;i > 33;i-=2) {
-			// -9 位断定为 0
 			if (llen == lines[i].length && +lines[i].slice(-9,-3) < max) continue;
 			lines[i] = lines[i-1] = void 0;
 		}
