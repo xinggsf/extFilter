@@ -39,7 +39,7 @@ export default function() {
 		}
 		if (4 == iItem) {
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
-			return text.replace(/(\n#EXT-X-DISCONTINUITY)\n.+\n.+(\n#EXTINF:3\.3{6},\n).+\2[^]{141,222}\1/g,'')
+			return text.replace(/(\n#EXT-X-DISCONTINUITY).{41,55}(\n#EXTINF:3\.3{6},).{33,39}\2.{141,211}\1/gs,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (iItem < 2) {
