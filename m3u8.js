@@ -23,7 +23,7 @@ const router = {
 			display: none !important;
 		}`
 };
-router['www.nnvod.com'] = router['www.ddzvod.com'];
+router['nnyy.in'] = router['www.dandanzan.me'] = router['www.nnvod.com'] = router['www.ddzvod.com'];
 router['www.dmmiku.net'] = router['www.dmmiku.com'];
 const ss = router[host];
 const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
