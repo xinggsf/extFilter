@@ -6,18 +6,17 @@ const rawConfig = {
 	],
 	"useJX": 999,
 	"jxUrls": [
-		{"name":"盒子","url":"https://jx.jsonplayer.com/player/?url="},
 		{"name":"88看","url":"https://vip.sp-flv.com:8443/?url="},
 		{"name":"咸鱼","url":"https://jx.xyflv.com/?url="},
 		{"name":"虾米","url":"https://jx.xmflv.com/?url="}
 	],
-	"useShaka": true,
+	"useShaka": false,
 	"buffSize": 80,
 	"hlsCache": false,
 	"autoWebFull": false,
 	"hostsDisableWF": [".yatu.tv","weixin.qq.com"],
-	"domainsCleanM3u": [".ddzvod.com",".nnvod.com"],
-	"hostsGM": ["dandanzan.net","kimivod.org","nunuyy5.com","nnyy.in"]
+	"domainsCleanM3u": [],
+	"hostsGM": ["kimivod.org"]
 };
 
 function promisifyNoFail(thisArg, fnName, outFn = r => r) {
