@@ -50,7 +50,7 @@ export default function() {
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (iItem > 4) {//神马云
-			const n = text.indexOf('#EXT-X-DISCONTINUITY', text.length - 288);
+			const n = text.indexOf('#EXT-X-DISCONTINUITY', text.length - 311);
 			if (n > 0) text = text.slice(0,n) + '#EXT-X-ENDLIST';
 		}
 
