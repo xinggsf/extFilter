@@ -38,6 +38,6 @@ q('#clearCache').addEventListener('click', ev => {
 		  cache: true,
 		  cacheStorage: true
 		},
-		alert.bind(null,'已成功删除缓存！')
+		window.close.bind(window)
 	);
 });
