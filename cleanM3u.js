@@ -4,7 +4,7 @@ export default function() {
 		'hmrv', 'heimuer', //木耳云
 		/^lz-?cdn/,'cdnlz', //量子云
 		'ffzy', //非凡云
-		'hdzyk','high','play-cdn','vipyz-cdn','yzzy' //神马云 high\d*-playback
+		'yzzy','vipyz-' //神马云 high\d*-playback play-cdn hdzyk
 	];
 	const hasFileExt = (url, ex) => {
 		return url.endsWith(ex) || url.includes(ex +'?', 22);
@@ -16,11 +16,14 @@ export default function() {
 	};
 	let iItem = 0; // 匹配项
 	const matchM3u = url => {
-		if (hasFileExt(url, '.m3u8') && /\.?([\w\-]+)\.[a-z]{2,5}[:\/]/.test(url)) {
-			const u = RegExp.$1;
+		if (!hasFileExt(url, '.m3u8')) return !1;
+		const m = url.match(/^https?:\/\/([\w\-]+)\.([\w\-]+)(\.?)/);
+		if (m[1].startsWith('yzzy')) iItem = 9;//神马云
+		else {
+			const u = m[3] ? m[2] : m[1];
 			iItem = items.findIndex(k => k instanceof RegExp ? k.test(u) : u.startsWith(k));
-			return true;
 		}
+		return true;
 	};
 	const pruner = (text) => {
 		text = text.trim();
