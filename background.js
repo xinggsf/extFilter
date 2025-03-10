@@ -205,6 +205,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 	function({tabId, frameId, parentFrameId, url, type}) {
 		if (tabIdList.has(tabId)) return _noBlock;// || !vKindList.includes(getExtName(url))
 		if (frameId != 0) {
+			if (url.slice(18,55).includes('/playurl/')) return _noBlock;
 			handleFrame(url,tabId,frameId,parentFrameId);
 			lm.inject(tabId, url);
 		}

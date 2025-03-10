@@ -4,7 +4,7 @@ export default function() {
 		'hmrv', 'heimuer', //木耳云
 		/^lz-?cdn/,'cdnlz', //量子云
 		'ffzy', //非凡云
-		'yzzy','vipyz-' //神马云 high\d*-playback play-cdn hdzyk
+		/^high\d*-p/,'hdzyk',/^y[yz]zy/,'vipyz-' //神马云 high\d*-playback play-cdn
 	];
 	const hasFileExt = (url, ex) => {
 		return url.endsWith(ex) || url.includes(ex +'?', 22);
