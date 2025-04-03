@@ -2,7 +2,7 @@
 export default function() {
 	const items = [
 		'hmrv', 'heimuer', //木耳云
-		/^lz-?cdn/,'cdnlz', //量子云
+		/^lz-?cdn/,'cdnlz',/^lz\d*uu/,  //量子云
 		'ffzy', //非凡云
 		/^high\d*-p/,'hdzyk',/^y[yz]zy/,'vipyz-' //神马云 high\d*-playback play-cdn
 	];
@@ -40,7 +40,7 @@ export default function() {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
-		if (4 == iItem) {
+		if (5 == iItem) {
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
 			return text.replace(/(\n#EXT-X-DISCONTINUITY).{41,55}(\n#EXTINF:3\.3{6},).{33,39}\2.{141,211}\1/gs,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
@@ -52,7 +52,7 @@ export default function() {
 				.replace(/(\n#EXT-X-DISCONTINUITY)(\n.+\n).+\2.+\2.+(\2.+)?\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
-		if (iItem > 4) {//神马云
+		if (iItem > 5) {//神马云
 			const n = text.indexOf('#EXT-X-DISCONTINUITY', text.length - 311);
 			if (n > 0) text = text.slice(0,n) + '#EXT-X-ENDLIST';
 		}
