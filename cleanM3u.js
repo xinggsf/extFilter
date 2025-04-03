@@ -42,7 +42,7 @@ export default function() {
 		}
 		if (5 == iItem) {
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
-			return text.replace(/(\n#EXT-X-DISCONTINUITY).{41,55}(\n#EXTINF:3\.3{6},).{33,39}\2.{141,211}\1/gs,'')
+			return text.replace(/(\n#EXT-X-DISCONTINUITY)[^]{200,333}#EXTINF:3\.3{6},\n.+?\n#EXTINF:\d\.\d66667,\n.+?\1/g,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (iItem < 2) {
