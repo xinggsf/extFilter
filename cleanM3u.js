@@ -53,8 +53,8 @@ export default function() {
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (iItem > 5) {//神马云
-			const n = text.indexOf('#EXT-X-DISCONTINUITY', text.length - 311);
-			if (n > 0) text = text.slice(0,n) + '#EXT-X-ENDLIST';
+			console.log('合金HTML5扩展：已删除神马云的m3u8广告!');
+			return text.replace(/(#EXT-X-DISCONTINUITY\n)#EXTINF:6\.666667,\n.+?\n#EXTINF:3\.3{6},[^]+?\1/g,'')
 		}
 
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
@@ -69,7 +69,7 @@ export default function() {
 			if (llen == lines[i].length && +lines[i].slice(-9,-3) < max) continue;
 			lines[i] = lines[i-1] = void 0;
 		}
-		console.log(`合金HTML5扩展：已删除${iItem > 4 ? '神马' : '量子'}云的m3u8广告!`);
+		console.log(`合金HTML5扩展：已删除量子云的m3u8广告!`);
 		return lines.filter(l => l !== void 0).join('\n');
 	};
 	const realFetch = self.fetch;
