@@ -41,9 +41,15 @@ export default function() {
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
 		if (5 == iItem) {
+			const replacer = (m, g1, g2) => { // /(#EXT-X-DISCONTINUITY\n).{211,455}\1/gs
+				const timeLines = g2.trim().split(/,\n.{35}\n/s); // /,\n\w+\.ts\n/
+				// if (timeLines.reduce((a, b) => b.endsWith('33333') ? 1+a : a, 0) < 3) return m;
+				const ADtime = timeLines.reduce((a, b) => +b.slice(8) + a, 0);
+				return ADtime < 22 ? '' : m;
+			};
 			// #EXTINF:2.233333, 2cf507fe7d7bbeeb898f89cb9b9f47e6.ts
-			const m = new Array(4).fill('[367]{5}').join('.{49}');
-			const r = new RegExp(String.raw`(#EXT-X-DISCONTINUITY\n).{11}${m}.{199,255}\1`,'gs');
+			const m = new Array(3).fill('[367]{5},').join('.{48}');
+			const r = new RegExp(String.raw`(#EXT-X-DISCONTINUITY\n).{11}${m}.{99,288}\1`,'gs');
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
 			return text.replace(r,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
@@ -59,9 +65,9 @@ export default function() {
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			const a = text.slice(n).split('\n');
 			const len = a[2].length +2; //.ts文件行。 a[1]：计时行 #EXTINF:6.666667,
-			const x = text.length - n - a[1].length*3 - len*2 - 48;
-			// String.raw`(${a[0]}\n)${a[1]}[^#]+${a[3]}[^#]+${a[5]}[^]+?\1`
-			const r = new RegExp(String.raw`(${a[0]}\n)${a[1]}.{${len}}${a[3]}.{${len}}${a[5]}.{${x},${x+28}}\1`,'gs');
+			const m = a.filter(k => k.startsWith('#EXTINF:')).join(`.{${len}}`);
+			// const x = text.length - n - a[1].length*3 - len*2 - 48; String.raw`(${a[0]}\n)${a[1]}.{${len}}${a[3]}.{${len}}${a[5]}.{${x},${x+28}}\1`
+			const r = new RegExp(String.raw`(${a[0]}\n)${m}.{${len}}\1`,'gs');
 			console.log('合金HTML5扩展：已删除神马云的m3u8广告!');
 			return text.slice(0,n).replace(r,'')+'#EXT-X-ENDLIST';
 		}
