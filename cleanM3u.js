@@ -49,7 +49,7 @@ export default function() {
 			};
 			// #EXTINF:2.233333, 2cf507fe7d7bbeeb898f89cb9b9f47e6.ts
 			const m = new Array(3).fill('[367]{5},').join('.{48}');
-			const r = new RegExp(String.raw`(#EXT-X-DISCONTINUITY\n).{11}${m}.{99,288}\1`,'gs');
+			const r = new RegExp(String.raw`(#EXT-X-DISCONTINUITY\n).{11}${m}.{99,455}\1`,'gs');
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
 			return text.replace(r,'')
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
