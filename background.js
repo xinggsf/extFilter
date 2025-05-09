@@ -159,7 +159,7 @@ chrome.webRequest.onBeforeRequest.addListener(({url,tabId,frameId,parentFrameId}
 		const v = _getMVFromFrame();
 		// log(url, v, parentFrameId)
 		if (!v) return _noBlock;
-		if (parentFrameId < 1) {
+		if (parentFrameId == 0) {
 			const info = { id: 'iframe-block', url: v, frameUrl: url };
 			chrome.tabs.sendMessage(tabId, info);
 		} else {
@@ -171,7 +171,8 @@ chrome.webRequest.onBeforeRequest.addListener(({url,tabId,frameId,parentFrameId}
     { 	urls: [
 			'https://player.youku.com/embed/*',
 			'https://film.qq.com/*',
-			'https://*/*.m3u8*'
+			'https://*/*.m3u8*',
+			'http://*/*.m3u8*'
 		],
 		types: ['sub_frame']
 	},
