@@ -73,7 +73,7 @@ const uu = {
 	},
 	getPlayOrd: (url) => uu.vLib[uu.getPlayType(url)] || 2,
 	toByteUnit(bytes,len=0) {
-		if (bytes < 1024) return bytes +'';
+		if (bytes < 1024) return bytes;
 		const symbols = Array.from('BKMGTPEZYB');
 		const exp = ~~(Math.log(bytes)/Math.log(2));
 		const i = ~~(exp / 10);

@@ -2,8 +2,6 @@ const host = location.hostname;
 let cfg, dp;
 const {r1, sleep, hookHls, dom, log, q, getPlayType} = uu;
 const router = {
-	'www.agedm.org': '.ratio-16x9{--bs-aspect-ratio:0 !important}',
-	'www.ddzvod.com': `video{max-height:100% !important}`,
 	'www.dmmiku.com': `
 		.dplayer-web-fullscreen-fix ul.extra.clearfix,
 		.billhao-head-image, #topnav {
@@ -23,16 +21,15 @@ const router = {
 			display: none !important;
 		}`
 };
-router['nnyy.in'] = router['www.dandanzan.me'] = router['www.nnvod.com'] = router['www.ddzvod.com'];
 router['www.dmmiku.net'] = router['www.dmmiku.com'];
 const ss = router[host];
 const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
 const iframes = document.getElementsByTagName('iframe');
 const find = [].find.bind(iframes);
-const getStyle = (o, s) => {
-	if (o.style[s]) return o.style[s];
+const getStyle = (el, s) => {
+	if (el.style[s]) return el.style[s];
 	s = s.replace(/([A-Z])/g,'-$1').toLowerCase();
-	return getComputedStyle(o)?.getPropertyValue(s);
+	return getComputedStyle(el)?.getPropertyValue(s);
 };
 
 const isMVFlash = e => {
@@ -108,10 +105,12 @@ const createPlayer = async (p, url, type = 'auto') => {
 	const mp = c.closest('.MacPlayer');
 	if (mp && mp.offsetHeight != h) {
 		mp.style.height = h + 'px';
-		if (mp.parentNode.offsetHeight < h) mp.parentNode.style.height = h + 'px';
+		// if (mp.parentNode.offsetHeight < h) mp.parentNode.style.height = h + 'px';
 	}
 	cfg.autoWebFull && !cfg.hostsDisableWF.some(k => host.includes(k)) && dp.fullScreen.request('web');
 	// c.scrollIntoView({block:'nearest',behavior:'smooth'});
+	getStyle(dp.video, 'maxHeight') &&
+    dp.video.style.setProperty("max-height", "100%", "important");
 };
 /// v 为iframe节点
 const handleMessage = async(v, url, vType='auto') => {
@@ -164,11 +163,13 @@ const handleMessage = async(v, url, vType='auto') => {
 		p = p.firstChild;
 	}
 	else {
-		let {offsetWidth: w, offsetHeight: h} = v;
-		if (h < w*0.5 || h > w*0.7) h = w*0.53 | 0;
+		p = v.parentNode;
+		p.matches('.ratio-16x9') && p.classList.remove('ratio-16x9');// age.tv
+		let {width: w, height: h} = (!v.clientHeight ? p : v).getBoundingClientRect();
+		if (h < w*0.5 || h > w*0.7) h = w*0.53;
 		p = document.createElement('div');
 		// const s = v.matches(':only-child') ? `width:100%;height:100%` : `width:${w}px;height:${h}px`;
-		p.setAttribute('style', `width:100%;height:${h}px`);
+		p.setAttribute('style', `width:100%;height:${~~h}px`);
 		v.replaceWith(p);
 	}
 	while (!window.DPlayer) await sleep(99); //防止hls等库后于DPlayer库加载

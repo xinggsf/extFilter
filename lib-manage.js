@@ -7,7 +7,7 @@ const saveMV = (tabId, detail) => {
 	let text = '1', a = allMVs.get(tabId);
 	if (!a) allMVs.set(tabId, Array.of(detail));
 	else if (a.some(k => k.url == detail.url)) return;
-	else text = uu.toByteUnit(a.unshift(detail),4);
+	else text = uu.toByteUnit(a.unshift(detail),4)+'';
 	chrome.browserAction.setBadgeText({tabId, text});
 };
 
