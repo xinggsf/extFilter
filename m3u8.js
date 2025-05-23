@@ -28,7 +28,7 @@ const iframes = document.getElementsByTagName('iframe');
 const find = [].find.bind(iframes);
 const getStyle = (el, s) => {
 	if (el.style[s]) return el.style[s];
-	s = s.replace(/([A-Z])/g,'-$1').toLowerCase();
+	s = s.replace(/[A-Z]/g, c => '-'+ c.toLowerCase());
 	return getComputedStyle(el)?.getPropertyValue(s);
 };
 
