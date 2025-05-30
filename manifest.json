@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "合金H5播放器",
 	"description": "去框架、去Flash播放;本地播放HLS、FLV、OGG、WebM、Dash、MP4等视频",
-	"version": "1.7.8",
+	"version": "1.7.9",
 	"background": {
 		"persistent": true,
 		"page": "background.html"
