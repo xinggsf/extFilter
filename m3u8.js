@@ -29,7 +29,7 @@ const find = [].find.bind(iframes);
 const getStyle = (el, s) => {
 	if (el.style[s]) return el.style[s];
 	s = s.replace(/[A-Z]/g, c => '-'+ c.toLowerCase());
-	return getComputedStyle(el)?.getPropertyValue(s);
+	return getComputedStyle(el).getPropertyValue(s);
 };
 
 const isMVFlash = e => {
@@ -109,8 +109,8 @@ const createPlayer = async (p, url, type = 'auto') => {
 	}
 	cfg.autoWebFull && !cfg.hostsDisableWF.some(k => host.includes(k)) && dp.fullScreen.request('web');
 	// c.scrollIntoView({block:'nearest',behavior:'smooth'});
-	getStyle(dp.video, 'maxHeight') &&
-    dp.video.style.setProperty("max-height", "100%", "important");
+	if (getStyle(dp.video, 'maxHeight') != 'none')
+		dp.video.style.setProperty("max-height", "100%", "important");
 };
 /// v 为iframe节点
 const handleMessage = async(v, url, vType='auto') => {
