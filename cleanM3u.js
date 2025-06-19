@@ -4,6 +4,7 @@ export default function() {
 		'hmrv', 'heimuer', //木耳云
 		/^lz-?cdn/,'cdnlz',/^lz\d*uu/,  //量子云
 		'ffzy', //非凡云
+		'bfikuncdn', //艾昆云
 		/^high\d*-p/,'hdzyk',/^y[yz]zy/,'vipyz-' //神马云 high\d*-playback play-cdn
 	];
 	const hasFileExt = (url, ex) => {
@@ -30,7 +31,7 @@ export default function() {
 		const replacer = (rawStr, g1, g2) => {
 			const i = g2.lastIndexOf(',');
 			// 掐头去尾以保证split得到纯计时值数组
-			const timeLines = g2.slice(8,i).split(/,.{39,77}F:/s); // /,\n\w+\.ts\n#EXTINF:/
+			const timeLines = g2.slice(8,i).split(/,.{39,88}F:/s); // /,\n\w+\.ts\n#EXTINF:/
 			const ADtime = timeLines.reduce((a, b) => +b + a, 0);
 			return ADtime < maxADtime ? '' : rawStr.slice(21);
 		};
@@ -55,6 +56,11 @@ export default function() {
 			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{270,455})\1/gs, replacer)
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
+		if (6 == iItem) {
+			maxADtime = 18;
+			console.log('合金HTML5扩展：已删除艾昆云的m3u8广告!');
+			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{388,474})\1/gs, replacer)
+		}
 		if (iItem < 2) {
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
 			// 3、4个相同时长（正则子组2）
@@ -63,7 +69,7 @@ export default function() {
 			console.log('合金HTML5扩展：已删除木耳云的m3u8广告!');
 			return text.replace(re2Line,'').replace(re,'')
 		}
-		if (iItem > 5) {
+		if (iItem > 6) {
 			maxADtime = 19;
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			const len = text.length - n - 35;
