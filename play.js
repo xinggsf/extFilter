@@ -20,11 +20,11 @@ const createPlayer = (v, url, type = 'auto', curTime = 0) => {
 		],
 		container: v
 	});
-	p.on('loadedmetadata', function() {
-		if (p.video.duration == Infinity) return;
-		p.speed(+localStorage.mvPlayRate || 1);
+	p.video.addEventListener('durationchange', function() {
+		if (this.duration == Infinity) return;
+		p.speed(+localStorage.mvPlayRate || 1.4);
 		curTime && p.seek(+curTime);
-	});
+	}, {once: true});
 	return p;
 };
 
