@@ -60,11 +60,13 @@ export default function() {
 		}
 		if (6 == iItem) {
 			console.log('合金HTML5扩展：已删除艾昆云的m3u8广告!');
-			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{388,474})\1/gs, replacer)
+			return text.replace(/(#EXT-X-DISCONTINUITY\n).{469,478}\1/gs, replacer)
 		}
 		if (7 == iItem) {
 			console.log('合金HTML5扩展：已删除魔都云的m3u8广告!');
-			return text.replace(/(#EXT-X-DISCONTINUITY\n).{333,488}\/9104kb.{16,19}\1/gs, '')
+			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
+			return text.slice(0,n).replace(/\s+(#EXT-X-DISCONTINUITY).{360,377}\1/gs, '')
+				+ '#EXT-X-ENDLIST';
 		}
 		if (iItem < 2) {
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
