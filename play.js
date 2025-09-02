@@ -34,4 +34,5 @@ const ps = new URLSearchParams(location.search);
 (async function(){
 	uu.hookHls(await syncApi.read({hlsCache:!1,buffSize:60}));
 	window.dp = createPlayer(uu.q('#player'), mvUrl, ps.get('vType'), ps.get('curTime'));
+	dp.video.click()
 })();
