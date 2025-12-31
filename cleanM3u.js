@@ -20,6 +20,7 @@ export default function() {
 	const matchM3u = url => {
 		if (!hasFileExt(url, '.m3u8')) return !1;
 		const m = url.match(/^https?:\/\/([\w\-]+)\.([\w\-]+)(\.?)/);
+		if (m[2].startsWith('ryplay')) return !1;//如意云
 		if (m[1].startsWith('yzzy')) iItem = 9;//神马云
 		else {
 			const u = m[3] ? m[2] : m[1];
