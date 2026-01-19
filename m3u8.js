@@ -101,8 +101,8 @@ const createPlayer = async (p, url, type = 'auto') => {
 	await sleep(99);
 	const c = dp.container;
 	c.closest('body > *')?.classList.add('gm-dp-zTop');
-	const h = c.offsetHeight;
-	const mp = c.closest('.MacPlayer');
+	const h = ~~c.offsetHeight;
+	const mp = c.parentNode.closest('div[class]');
 	if (mp && mp.offsetHeight != h) {
 		mp.style.height = h + 'px';
 		// if (mp.parentNode.offsetHeight < h) mp.parentNode.style.height = h + 'px';
@@ -166,10 +166,10 @@ const handleMessage = async(v, url, vType='auto') => {
 		p = v.parentNode;
 		p.matches('.ratio-16x9') && p.classList.remove('ratio-16x9');// age.tv
 		let {width: w, height: h} = (!v.clientHeight ? p : v).getBoundingClientRect();
-		if (h < w*0.5 || h > w*0.7) h = w*0.53;
+		if (h < w*0.5 || h > w*0.7) h = w*9>>4;
 		p = document.createElement('div');
 		// const s = v.matches(':only-child') ? `width:100%;height:100%` : `width:${w}px;height:${h}px`;
-		p.setAttribute('style', `width:100%;height:${~~h}px`);
+		p.setAttribute('style', `width:100%;height:${h}px`);
 		v.replaceWith(p);
 	}
 	while (!window.DPlayer) await sleep(99); //防止hls等库后于DPlayer库加载
