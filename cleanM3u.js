@@ -1,7 +1,7 @@
 //UBO m3u-prune.js https://en.wikipedia.org/wiki/M3U
 export default function() {
 	const items = [
-		'hmrv', 'heimuer', //木耳云
+		'ryplay', //如意云
 		/^lz-?cdn/,'cdnlz',/^lz\d*uu/,  //量子云
 		'ffzy', //非凡云
 		'bfikuncdn', //艾昆云
@@ -20,7 +20,6 @@ export default function() {
 	const matchM3u = url => {
 		if (!hasFileExt(url, '.m3u8')) return !1;
 		const m = url.match(/^https?:\/\/([\w\-]+)\.([\w\-]+)(\.?)/);
-		if (m[2].startsWith('ryplay')) return !1;//如意云
 		if (m[1].startsWith('yzzy')) iItem = 9;//神马云
 		else {
 			const u = m[3] ? m[2] : m[1];
@@ -51,7 +50,7 @@ export default function() {
 			console.log('合金HTML5扩展： Remove ad\'s lines of m3u8!');
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
-		if (5 == iItem) {
+		if (4 == iItem) {
 			maxADtime = 22;
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
 			// #EXTINF:2.233333, 2cf507fe7d7bbeeb898f89cb9b9f47e6.ts 一切片二行~长54，5－8个切片：
@@ -59,25 +58,28 @@ export default function() {
 				.replace(/(#EXT-X-DISCONTINUITY\n)(.{270,432})\1/gs, replacer)
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
-		if (6 == iItem) {
+		if (5 == iItem) {
 			console.log('合金HTML5扩展：已删除艾昆云的m3u8广告!');
 			return text.replace(/(#EXT-X-DISCONTINUITY\n).{469,478}\1/gs, replacer)
 		}
-		if (7 == iItem) {
+		if (6 == iItem) {
 			console.log('合金HTML5扩展：已删除魔都云的m3u8广告!');
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			return text.slice(0,n).replace(/\s+(#EXT-X-DISCONTINUITY).{360,377}\1/gs, '')
 				+ '#EXT-X-ENDLIST';
 		}
-		if (iItem < 2) {
+		if (0 == iItem) {
+			console.log('合金HTML5扩展：已删除如意云的m3u8广告!');
+			return text.replace(/(#EXT-X-DISCONTINUITY\n)(#EXTINF:4\.0{6}).{92}\2.{92}\2.+?\1/gs, '')
+			/*
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
 			// 3、4个相同时长（正则子组2）
 			const re = new RegExp(String.raw`(\n#EXT-X-DISCONTINUITY)(.+?,).{${n}}\2.{${n}}\2.{${n},${n*2+22}}\1`,'gs');
 			const re2Line = new RegExp(`(\\n#EXT-X-DISCONTINUITY).{${n+11},${n+22}}\\1`,'s');
 			console.log('合金HTML5扩展：已删除木耳云的m3u8广告!');
-			return text.replace(re2Line,'').replace(re,'')
+			return text.replace(re2Line,'').replace(re,'') */
 		}
-		if (iItem > 7) {
+		if (iItem > 6) {
 			maxADtime = 20;
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			const len = text.length - n - 35;

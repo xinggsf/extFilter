@@ -23,7 +23,7 @@ const router = {
 };
 router['www.dmmiku.net'] = router['www.dmmiku.com'];
 const ss = router[host];
-const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
+// const reLZFrame = /^https:\/\/vip\.lz-?cdn\d*\.com\/share\//;
 const iframes = document.getElementsByTagName('iframe');
 const find = [].find.bind(iframes);
 const getStyle = (el, s) => {
@@ -115,14 +115,14 @@ const createPlayer = async (p, url, type = 'auto') => {
 /// v 为iframe节点
 const handleMessage = async(v, url, vType='auto') => {
 	if (!v) return;
-	if (reLZFrame.test(url)) {
+	if (url.includes('.com/share/')) {
 		// const r = await fetch(url,{
 			// header: {referer:''}
 		// });
 		// const txt = await r.text();
 		// const path = r1(/var main = "(.+?\.m3u8)/, txt);
 		// url = `https://${domain}${path}`;
-		v.src = url;
+		location.replace(url);
 		return;
 	}
 	// yhdmw7.com yhdm95.com host为页面域名
@@ -150,8 +150,7 @@ const handleMessage = async(v, url, vType='auto') => {
 		v.after(p);
 
 		v.parentNode.style.height = '100%';
-		const e = q('.play_xian');
-		e && e.addEventListener('click', ev => {
+		q('.play_xian2')?.addEventListener('click', ev => {
 			if (ev.target.matches('a')) v.hidden = !1;
 			if (dp) dp.container.hidden = true;
 		});
