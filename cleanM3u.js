@@ -82,10 +82,11 @@ export default function() {
 		if (iItem > 6) {
 			maxADtime = 20;
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
-			const len = text.length - n - 35;
-			const re = new RegExp(String.raw`(#EXT-X-DISCONTINUITY\n)(.{${len}})\1`,'gs');
 			console.log('合金HTML5扩展：已删除神马云的m3u8广告!');
-			return text.slice(0,n).replace(re, replacer) + '#EXT-X-ENDLIST';
+			//五、六项切片：216-270
+			return text.slice(0,n)
+				.replace(/(#EXT-X-DISCONTINUITY\n)(.{${211,277}})\1/gs, replacer)
+				+ '#EXT-X-ENDLIST';
 		}
 
 		console.log(`合金HTML5扩展：已删除量子云的m3u8广告!`);
