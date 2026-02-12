@@ -70,7 +70,8 @@ export default function() {
 		}
 		if (0 == iItem) {
 			console.log('合金HTML5扩展：已删除如意云的m3u8广告!');
-			return text.replace(/(#EXT-X-DISCONTINUITY\n)(#EXTINF:4\.0{6}).{92}\2.{92}\2.+?\1/gs, '')
+			const re = /(#EXT-X-DISCONTINUITY\n)#EXTINF:(4\.0{6}).{46}5\.480000.{46}\2.{146,211}\1/gs;
+			return text.replace(re, '')
 			/*
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
 			// 3、4个相同时长（正则子组2）
@@ -85,7 +86,7 @@ export default function() {
 			console.log('合金HTML5扩展：已删除神马云的m3u8广告!');
 			//五、六项切片：216-270
 			return text.slice(0,n)
-				.replace(/(#EXT-X-DISCONTINUITY\n)(.{${211,277}})\1/gs, replacer)
+				.replace(/(#EXT-X-DISCONTINUITY\n)(.{211,277})\1/gs, replacer)
 				+ '#EXT-X-ENDLIST';
 		}
 
