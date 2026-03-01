@@ -70,7 +70,7 @@ export default function() {
 		}
 		if (0 == iItem) {
 			console.log('合金HTML5扩展：已删除如意云的m3u8广告!');
-			const re = /(#EXT-X-DISCONTINUITY\n)#EXTINF:(4\.0{6}).{46}5\.480000.{46}\2.{146,211}\1/gs;
+			const re = /(#EXT-X-DISCONTINUITY\n)#EXTINF:(4\.0{6}).{46}\2.{46}\2.{146,666}\1/gs;
 			return text.replace(re, '')
 			/*
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
