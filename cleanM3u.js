@@ -32,7 +32,7 @@ export default function() {
 		const replacer = (rawStr, g1, g2) => {
 			const i = g2.lastIndexOf(',');
 			// 掐头去尾以保证split得到纯计时值数组
-			const timeLines = g2.slice(8,i).split(/,.{39,99}F:/s); // /,\n\w+\.ts\n#EXTINF:/
+			const timeLines = g2.slice(8,i).split(/,.{39,55}F:/s); // /,\n\w+\.ts\n#EXTINF:/
 			const ADtime = timeLines.reduce((a, b) => +b + a, 0);
 			return fnADtime(ADtime) ? '' : rawStr.slice(21);
 		};
@@ -70,13 +70,22 @@ export default function() {
 		}
 		if (0 == iItem) {
 			const a = text.split('#EXT-X-DISCONTINUITY\n');
-			for (const [i,k] of a) if (i > 9 && k.length > 269) {
-				const idx = k.lastIndexOf(',');
-				const lines = k.slice(8,idx).split(/,.{39,99}F:/s);
-				if (lines.length == 6) lines.pop();
-				const time = lines.reduce((a, b) => +b + a, 0);
-				if (time == 20) a[i] = '';				
+			let i = a.length - 9;
+			for (;i > 9;--i) if (+a[i].slice(8,16) == 4){
+				// if (270 > a[i].length > 324) continue;
+				if (a[i].length > 270 && +a[i].slice(278,286) > 2) continue;
+				const idx = a[i].lastIndexOf(',');
+				const lines = a[i].slice(62,idx).split(/,.{38,45}F:/s);
+				const v = lines.length == 5 ? +lines.pop() : 0;
+				let time = lines.reduce((a, b) => +b + a, 4);			
+				if (time != 20) time += v;
+				if ([20,21,22].includes(time)) {
+					// console.log('已删除: \n'+ a[i]);
+					a[i] = '';
+					i -= 22;
+				}
 			}
+			console.log('已删除如意云的m3u8广告!');
 			return a.join('');
 			/*
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
