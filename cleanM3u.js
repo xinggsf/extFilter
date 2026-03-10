@@ -59,14 +59,16 @@ export default function() {
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (5 == iItem) {
+			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
+			text = text.slice(0,n) +'#EXT-X-ENDLIST';
 			console.log('合金HTML5扩展：已删除艾昆云的m3u8广告!');
-			return text.replace(/(#EXT-X-DISCONTINUITY\n).{469,478}\1/gs, replacer)
+			return text.replace(/(#EXT-X-DISCONTINUITY\n).{255,266}\1/gs, '')
 		}
 		if (6 == iItem) {
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			text = text.slice(0,n) +'#EXT-X-ENDLIST';
 			console.log('合金HTML5扩展：已删除魔都云的m3u8广告!');
-			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{360,777}\1/gs, '')				
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{360,777}\1/gs, '')
 		}
 		if (0 == iItem) {
 			const a = text.split('#EXT-X-DISCONTINUITY\n');
@@ -77,7 +79,7 @@ export default function() {
 				const idx = a[i].lastIndexOf(',');
 				const lines = a[i].slice(62,idx).split(/,.{38,45}F:/s);
 				const v = lines.length == 5 ? +lines.pop() : 0;
-				let time = lines.reduce((a, b) => +b + a, 4);			
+				let time = lines.reduce((a, b) => +b + a, 4);
 				if (time != 20) time += v;
 				if ([20,21,22].includes(time)) {
 					// console.log('已删除: \n'+ a[i]);
