@@ -28,13 +28,13 @@ export default function() {
 		return true;
 	};
 	const pruner = (text) => {
-		let fnADtime = t => t <= 19;
-		const replacer = (rawStr, g1, g2) => {
-			const i = g2.lastIndexOf(',');
-			// 掐头去尾以保证split得到纯计时值数组
-			const timeLines = g2.slice(8,i).split(/,.{39,55}F:/s); // /,\n\w+\.ts\n#EXTINF:/
-			const ADtime = timeLines.reduce((a, b) => +b + a, 0);
-			return fnADtime(ADtime) ? '' : rawStr.slice(21);
+		let iDouhao = 0, isAd = (t, a, g3) => t <= 19;
+		const reGetTime = /,.{38,}?F:/s;
+		const replacer = (rawStr, g1, g2, g3) => {
+			if (iDouhao == 0) iDouhao = g2.lastIndexOf(',')-g2.length;
+			const times = g2.slice(8,iDouhao).split(reGetTime);
+			const t = times.reduce((a, b) => +b + a, 0);
+			return isAd(t,times,g3) ? '' : rawStr.slice(21);
 		};
 		text = text.trim();
 		if (
@@ -51,33 +51,45 @@ export default function() {
 			return text.replace(/\s+(#EXT-X-DISCONTINUITY).+?\1/gs,'');
 		}
 		if (4 == iItem) {
-			fnADtime = t => t <= 22;
+			isAd = t => t <= 22;
 			console.log('合金HTML5扩展：已删除非凡云的m3u8广告!');
 			// #EXTINF:2.233333, 2cf507fe7d7bbeeb898f89cb9b9f47e6.ts 一切片二行~长54，5－8个切片：
-			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{54})\1.{270,432}\1/gs, '$2')
-				.replace(/(#EXT-X-DISCONTINUITY\n)(.{270,432})\1/gs, replacer)
+			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{54})\1.{270,}?\1/gs, '$2')
+				.replace(/(#EXT-X-DISCONTINUITY\n)(.{270,}?)\1/gs, replacer)
 				// .replace(/\s+#EXT-X-DISCONTINUITY/g,'');
 		}
 		if (5 == iItem) {
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			text = text.slice(0,n) +'#EXT-X-ENDLIST';
 			console.log('合金HTML5扩展：已删除艾昆云的m3u8广告!');
-			return text.replace(/(#EXT-X-DISCONTINUITY\n).{255,266}\1/gs, '')
+			return text.replace(/(#EXT-X-DISCONTINUITY\n).{255,}?\1/gs, '')
 		}
 		if (6 == iItem) {
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			text = text.slice(0,n) +'#EXT-X-ENDLIST';
 			console.log('合金HTML5扩展：已删除魔都云的m3u8广告!');
-			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{360,777}\1/gs, '')
+			return text.replace(/\s+(#EXT-X-DISCONTINUITY).{360,}?\1/gs, '')
 		}
 		if (0 == iItem) {
+			iDouhao = 216 - (54-16);
+			isAd = (t, a, g3) => {
+				const time5 = g3 ? +g3.slice(8,16) : 0;
+				if (time5 > 2) return false;
+				if (t == 16) return true;
+				t += time5;
+				return t == 16 || t == 17;
+			};
+			console.log('已删除如意云的m3u8广告!');
+			return text.replace(/(#EXT-X-DISCONTINUITY\n).{8}4.0{6}.{38}(.{216})(.{54})?\1/gs, replacer);
+			/*
 			const a = text.split('#EXT-X-DISCONTINUITY\n');
 			let i = a.length - 9;
-			for (;i > 9;--i) if (+a[i].slice(8,16) == 4){
-				// if (270 > a[i].length > 324) continue;
-				if (a[i].length > 270 && +a[i].slice(278,286) > 2) continue;
+			for (;i > 9;--i) {
+				if (+a[i].slice(8,15) != 4) continue;
+				// if (270 > a[i].length || a[i].length > 324) continue;
+				if (a[i].length > 270 && +a[i].slice(278,285) > 2) continue;
 				const idx = a[i].lastIndexOf(',');
-				const lines = a[i].slice(62,idx).split(/,.{38,45}F:/s);
+				const lines = a[i].slice(62,idx).split(/,.{38,}?F:/s);
 				const v = lines.length == 5 ? +lines.pop() : 0;
 				let time = lines.reduce((a, b) => +b + a, 4);
 				if (time != 20) time += v;
@@ -89,7 +101,8 @@ export default function() {
 			}
 			console.log('已删除如意云的m3u8广告!');
 			return a.join('');
-			/*
+
+			// 木耳云
 			const n = text.lastIndexOf('\n') - text.lastIndexOf(',') - 1; // ts'line.length +1
 			// 3、4个相同时长（正则子组2）
 			const re = new RegExp(String.raw`(\n#EXT-X-DISCONTINUITY)(.+?,).{${n}}\2.{${n}}\2.{${n},${n*2+22}}\1`,'gs');
@@ -98,18 +111,18 @@ export default function() {
 			return text.replace(re2Line,'').replace(re,'') */
 		}
 		if (iItem > 6) {
-			fnADtime = t => t <= 20;
+			isAd = t => t <= 20;
 			const n = text.lastIndexOf('#EXT-X-DISCONTINUITY');
 			text = text.slice(0,n) +'#EXT-X-ENDLIST';
 			console.log('合金HTML5扩展：已删除神马云的m3u8广告!');
 			//五、六项切片：216-270
-			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{211,277})\1/gs, replacer)
+			return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{211,}?)\1/gs, replacer)
 		}
 
 		console.log(`合金HTML5扩展：已删除量子云的m3u8广告!`);
-		// return text.replace(/(#EXT-X-DISCONTINUITY\n).{34}ts.{148,260}\1/gs, '');
+		// return text.replace(/(#EXT-X-DISCONTINUITY\n).{34}ts.{148,}?\1/gs, '');
 		//37*4=148,37*7+1=260 #EXT-X-DISCONTINUITY #EXTINF:6.667, 33ebec35ff70821164.ts
-		return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{185,259})\1/gs,
+		return text.replace(/(#EXT-X-DISCONTINUITY\n)(.{185,}?)\1/gs,
 			(rawStr, g1, g2) => g2.length % 37 ? rawStr.slice(21) : '');
 /*
 		const lines = text.split(/\s+#EXT-X-DISCONTINUITY\s+|\s+/);
