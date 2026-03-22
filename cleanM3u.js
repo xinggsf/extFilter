@@ -82,19 +82,20 @@ export default function() {
 			console.log('已删除如意云的m3u8广告!');
 			return text.replace(/(#EXT-X-DISCONTINUITY\n).{8}4.0{6}.{38}(.{216})(.{54})?\1/gs, replacer);
 			/*
+			const time0 = 4; // 项0~5
 			const a = text.split('#EXT-X-DISCONTINUITY\n');
 			let i = a.length - 9;
 			for (;i > 9;--i) {
-				if (+a[i].slice(8,15) != 4) continue;
-				// if (270 > a[i].length || a[i].length > 324) continue;
-				if (a[i].length > 270 && +a[i].slice(278,285) > 2) continue;
-				const idx = a[i].lastIndexOf(',');
-				const lines = a[i].slice(62,idx).split(/,.{38,}?F:/s);
-				const v = lines.length == 5 ? +lines.pop() : 0;
-				let time = lines.reduce((a, b) => +b + a, 4);
-				if (time != 20) time += v;
+				const s = a[i];
+				if (+s.slice(8,16) != time0) continue;
+				const time5 = s.length == 324 ? +s.slice(278,286) :
+							  s.length == 270 ? 0 : 99;
+				if (time5 > 2) continue;
+				const lines = s.slice(62,232).split(reGetTime);
+				let time = lines.reduce((a, b) => +b + a, time0);
+				if (time != 20) time += time5;
 				if ([20,21,22].includes(time)) {
-					// console.log('已删除: \n'+ a[i]);
+					// console.log('已删除: \n'+ s);
 					a[i] = '';
 					i -= 22;
 				}
